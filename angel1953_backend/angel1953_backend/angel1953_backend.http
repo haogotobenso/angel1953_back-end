@@ -1,0 +1,6 @@
+@angel1953_backend_HostAddress = http://localhost:5280
+
+GET {{angel1953_backend_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
