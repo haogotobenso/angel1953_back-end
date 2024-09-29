@@ -1,33 +1,32 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\User\\Desktop\\畢專\\angel1953_back-end\\angel1953_backend\\angel1953_backend\\angel1953_backend.csproj": {}
+    "C:\\Users\\User\\Desktop\\angel1953_back-end\\angel1953_backend\\angel1953_backend\\angel1953_backend.csproj": {}
   },
   "projects": {
-    "C:\\Users\\User\\Desktop\\畢專\\angel1953_back-end\\angel1953_backend\\angel1953_backend\\angel1953_backend.csproj": {
+    "C:\\Users\\User\\Desktop\\angel1953_back-end\\angel1953_backend\\angel1953_backend\\angel1953_backend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\User\\Desktop\\畢專\\angel1953_back-end\\angel1953_backend\\angel1953_backend\\angel1953_backend.csproj",
+        "projectUniqueName": "C:\\Users\\User\\Desktop\\angel1953_back-end\\angel1953_backend\\angel1953_backend\\angel1953_backend.csproj",
         "projectName": "angel1953_backend",
-        "projectPath": "C:\\Users\\User\\Desktop\\畢專\\angel1953_back-end\\angel1953_backend\\angel1953_backend\\angel1953_backend.csproj",
+        "projectPath": "C:\\Users\\User\\Desktop\\angel1953_back-end\\angel1953_backend\\angel1953_backend\\angel1953_backend.csproj",
         "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\User\\Desktop\\畢專\\angel1953_back-end\\angel1953_backend\\angel1953_backend\\obj\\",
+        "outputPath": "C:\\Users\\User\\Desktop\\angel1953_back-end\\angel1953_backend\\angel1953_backend\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
           "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -51,6 +50,14 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[8.0.8, )"
+            },
+            "Microsoft.AspNetCore.Authorization": {
+              "target": "Package",
+              "version": "[8.0.8, )"
+            },
             "Microsoft.Data.SqlClient": {
               "target": "Package",
               "version": "[5.2.2, )"
@@ -62,6 +69,20 @@
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
               "version": "[8.0.8, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.8, )"
+            },
+            "Microsoft.IdentityModel.Tokens": {
+              "target": "Package",
+              "version": "[8.1.0, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
             }
           },
           "imports": [
