@@ -3,12 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\User\\Desktop\\angel1953_back-end\\angel1953_backend\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{DBC3ED51-2E9F-495D-A97F-4E649FDA1721}|angel1953_backend\\angel1953_backend.csproj|c:\\users\\user\\desktop\\angel1953_back-end\\angel1953_backend\\angel1953_backend\\repository\\memberrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{DBC3ED51-2E9F-495D-A97F-4E649FDA1721}|angel1953_backend\\angel1953_backend.csproj|solutionrelative:angel1953_backend\\repository\\memberrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{DBC3ED51-2E9F-495D-A97F-4E649FDA1721}|angel1953_backend\\angel1953_backend.csproj|c:\\users\\user\\desktop\\angel1953_back-end\\angel1953_backend\\angel1953_backend\\services\\memberservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{DBC3ED51-2E9F-495D-A97F-4E649FDA1721}|angel1953_backend\\angel1953_backend.csproj|solutionrelative:angel1953_backend\\services\\memberservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DBC3ED51-2E9F-495D-A97F-4E649FDA1721}|angel1953_backend\\angel1953_backend.csproj|c:\\users\\user\\desktop\\angel1953_back-end\\angel1953_backend\\angel1953_backend\\repository\\memberrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DBC3ED51-2E9F-495D-A97F-4E649FDA1721}|angel1953_backend\\angel1953_backend.csproj|solutionrelative:angel1953_backend\\repository\\memberrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{DBC3ED51-2E9F-495D-A97F-4E649FDA1721}|angel1953_backend\\angel1953_backend.csproj|c:\\users\\user\\desktop\\angel1953_back-end\\angel1953_backend\\angel1953_backend\\controllers\\membercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -54,17 +54,17 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "MemberServices.cs",
               "DocumentMoniker": "C:\\Users\\User\\Desktop\\angel1953_back-end\\angel1953_backend\\angel1953_backend\\Services\\MemberServices.cs",
               "RelativeDocumentMoniker": "angel1953_backend\\Services\\MemberServices.cs",
               "ToolTip": "C:\\Users\\User\\Desktop\\angel1953_back-end\\angel1953_backend\\angel1953_backend\\Services\\MemberServices.cs",
               "RelativeToolTip": "angel1953_backend\\Services\\MemberServices.cs",
-              "ViewState": "AQIAAA0AAAAAAAAAAAAAwBcAAABCAAAA",
+              "ViewState": "AQIAACQAAAAAAAAAAAAIwD0AAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-09-28T08:31:35.227Z",
               "EditorCaption": ""
@@ -77,19 +77,20 @@
               "RelativeDocumentMoniker": "angel1953_backend\\Controllers\\MemberController.cs",
               "ToolTip": "C:\\Users\\User\\Desktop\\angel1953_back-end\\angel1953_backend\\angel1953_backend\\Controllers\\MemberController.cs",
               "RelativeToolTip": "angel1953_backend\\Controllers\\MemberController.cs",
-              "ViewState": "AQIAABsAAAAAAAAAAAAIwE0AAAAQAAAA",
+              "ViewState": "AQIAAEYAAAAAAAAAAADgvz4AAAA9AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-28T08:26:31.063Z"
+              "WhenOpened": "2024-09-28T08:26:31.063Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "MemberRepository.cs",
               "DocumentMoniker": "C:\\Users\\User\\Desktop\\angel1953_back-end\\angel1953_backend\\angel1953_backend\\Repository\\MemberRepository.cs",
               "RelativeDocumentMoniker": "angel1953_backend\\Repository\\MemberRepository.cs",
               "ToolTip": "C:\\Users\\User\\Desktop\\angel1953_back-end\\angel1953_backend\\angel1953_backend\\Repository\\MemberRepository.cs",
               "RelativeToolTip": "angel1953_backend\\Repository\\MemberRepository.cs",
-              "ViewState": "AQIAAEsAAAAAAAAAAAAIwI8AAAANAAAA",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAywAoAAABDAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-09-28T08:53:27.738Z",
               "EditorCaption": ""
