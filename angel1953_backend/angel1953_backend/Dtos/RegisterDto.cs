@@ -7,7 +7,7 @@ namespace angel1953_backend.Dtos
 {
     public class RegisterDto
     {
-        public bool IsTeacher { get; set; }
+        public byte IsTeacher { get; set; }
         
         public string Account { get; set; } = null!;
 
@@ -21,9 +21,11 @@ namespace angel1953_backend.Dtos
 
         public string? AuthCode { get; set; }
 
-        public string School { get; set; }
+        public string? School { get; set; }
 
-        public int SchoolId { get; set; }
+        public int? SchoolId { get; set; }
+
+        public int? MidSchoolId {get; set;}
 
         public string? Class { get; set; }
 

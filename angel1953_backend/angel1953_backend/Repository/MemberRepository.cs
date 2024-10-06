@@ -51,62 +51,6 @@ namespace angel1953_backend.Repository
             }
         }
         #endregion
-        #region 取得學校Id
-        public int getSchoolId(string school) 
-        {
-            try 
-            {
-                int schoolid = sreachSchool(school);
-                if (schoolid == -1) 
-                {
-                    schoolid=addSchool(school);
-                }
-                return schoolid;
-            }catch (Exception ex) 
-            {
-                throw new Exception(ex.ToString());
-            }
-
-        }
-        #endregion
-        #region 新增學校
-        public int addSchool(string school) 
-        {
-            try 
-            {
-                School newSchool = new School();
-                newSchool.SchoolName = school;
-                _context.School.Add(newSchool);
-                _context.SaveChanges();
-                return newSchool.SchoolId;
-
-            }
-            catch (Exception ex) 
-            {
-                throw new Exception(ex.ToString());
-            }
-        }
-
-        #endregion
-        #region 查詢學校
-        public int sreachSchool(string school) 
-        {
-            try
-            {
-                int schoolid = _context.School
-                              .Where(s => s.SchoolName == school)
-                              .Select(s => s.SchoolId)
-                              .SingleOrDefault();
-
-                return schoolid == 0 ? -1 : schoolid;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.ToString());
-            }
-        }
-        #endregion
-
         #region 取得班級Id
         public int getClassId(string classname)
         {
@@ -225,5 +169,95 @@ namespace angel1953_backend.Repository
             }
         }
         #endregion
+
+        #region 取得國中名單
+        public List<MidSchool> getMidSchoolList()
+        {
+            
+            try
+            {
+                List<MidSchool> midSchools = _context.MidSchool.ToList();
+                return midSchools; 
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
+        }
+        #endregion
+
+        #region 取得高中名單
+        public List<School> getSchoolList()
+        {
+            
+            try
+            {
+                List<School> Schools = _context.School.ToList();
+                return Schools; 
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
+        }
+        #endregion
+
+        // #region 取得學校Id
+        // public int getSchoolId(string school) 
+        // {
+        //     try 
+        //     {
+        //         int schoolid = sreachSchool(school);
+        //         if (schoolid == -1) 
+        //         {
+        //             schoolid=addSchool(school);
+        //         }
+        //         return schoolid;
+        //     }catch (Exception ex) 
+        //     {
+        //         throw new Exception(ex.ToString());
+        //     }
+
+        // }
+        // #endregion
+        // #region 新增學校
+        // public int addSchool(string school) 
+        // {
+        //     try 
+        //     {
+        //         School newSchool = new School();
+        //         newSchool.School1 = school;
+        //         _context.School.Add(newSchool);
+        //         _context.SaveChanges();
+        //         return newSchool.SchoolId;
+
+        //     }
+        //     catch (Exception ex) 
+        //     {
+        //         throw new Exception(ex.ToString());
+        //     }
+        // }
+
+        // #endregion
+        // #region 查詢學校
+        // public int sreachSchool(string school) 
+        // {
+        //     try
+        //     {
+        //         int schoolid = _context.School
+        //                       .Where(s => s.School1 == school)
+        //                       .Select(s => s.SchoolId)
+        //                       .SingleOrDefault();
+
+        //         return schoolid == 0 ? -1 : schoolid;
+        //     }
+        //     catch (Exception ex)
+        //     {
+        //         throw new Exception(ex.ToString());
+        //     }
+        // }
+        // #endregion
     }
 }

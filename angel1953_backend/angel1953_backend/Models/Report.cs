@@ -41,7 +41,5 @@ public partial class Report
 
     public virtual Platform Platform { get; set; } = null!;
 
-    public virtual School? School { get; set; }
-
     public virtual ReportType Type { get; set; } = null!;
 }

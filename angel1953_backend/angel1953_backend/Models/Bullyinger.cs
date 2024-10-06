@@ -17,5 +17,7 @@ public partial class Bullyinger
 
     public virtual Member? AccountNavigation { get; set; }
 
+    public virtual ICollection<BullyingDetect> BullyingDetect { get; set; } = new List<BullyingDetect>();
+
     public virtual ICollection<ReportDetail> ReportDetail { get; set; } = new List<ReportDetail>();
 }

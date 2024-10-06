@@ -6,6 +6,8 @@ using Newtonsoft.Json;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using System.IdentityModel.Tokens.Jwt;
+using angel1953_backend.Models;
+using Microsoft.Identity.Client;
 
 
 namespace angel1953_backend.Controllers
@@ -24,18 +26,49 @@ namespace angel1953_backend.Controllers
             _mailService = mailService;
             _configuration = configuration;
         }
-    
+
+        #region 國中名單
+        [HttpGet("GetMidSchoolList")]
+        public IActionResult GetMidSchoolList()
+        {
+            List<MidSchool> midSchool = _memberService.GetMidSchoolList();
+            var msg = new { Status = 200, Message = midSchool };
+            var jsonmsg = JsonConvert.SerializeObject(msg);
+            return Content(jsonmsg, "application/json");
+
+        }
+        #endregion
+
+        #region  高中名單
+        [HttpGet("GetSchoolList")]
+        public IActionResult GetSchoolList()
+        {
+            List<School> School = _memberService.GetSchoolList();
+            var msg = new { Status = 200, Message = School };
+            var jsonmsg = JsonConvert.SerializeObject(msg);
+            return Content(jsonmsg, "application/json");
+
+        }
+
+        #endregion
+
         #region 註冊
         [HttpPost("Register")]
         public IActionResult Register([FromForm] RegisterDto member, [FromForm] IFormFile? teacherPhoto)
         {
-            if(member.IsTeacher)
+            if(member.IsTeacher == 1 || member.IsTeacher == 2)
             {
                 using (var memoryStream = new MemoryStream())
                 {
                     teacherPhoto.CopyTo(memoryStream);
                     member.TeacherImg = memoryStream.ToArray(); // 將圖片儲存為 byte[]
                 }
+            }
+            if(member.MidSchoolId!=null && member.SchoolId!=null)
+            {
+                var msg = new { Status = 400, Message = "學校僅能選擇一學制" };
+                var jsonmsg = JsonConvert.SerializeObject(msg);
+                return Content(jsonmsg, "application/json");
             }
             if (member.Password == member.PasswordCheck)
             {

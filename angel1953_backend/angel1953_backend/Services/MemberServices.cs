@@ -31,20 +31,36 @@ namespace angel1953_backend.Services
             member.Password = register.Password;
             member.Name = register.Name;
             member.Email = register.Email;
-            member.SchoolId = _memberRepository.getSchoolId(register.School);
-            if (register.IsTeacher)
+            if(register.MidSchoolId == null) //高中
             {
-                member.IsTeacher = true;
+                member.SchoolId = register.SchoolId;
+                member.MidSchoolId = null;
+            }
+            else if(register.SchoolId == null) //國中
+            {
+                member.SchoolId = null;
+                member.MidSchoolId = register.MidSchoolId;
+            }
+            //member.SchoolId = _memberRepository.getSchoolId(register.School);
+            member.IsTeacher = register.IsTeacher;
+            if (register.IsTeacher==1) //老師
+            {
+                member.TeacherImg = register.TeacherImg;
+                member.ClassId = _memberRepository.getClassId(register.Class);
+                member.StudentId = null;
+            }
+            else if(register.IsTeacher==2) //學校輔導人員
+            {
                 member.TeacherImg = register.TeacherImg;
                 member.ClassId = null;
                 member.StudentId = null;
             }
-            else
+            else //學生
             {
-                member.IsTeacher = false;
                 member.TeacherImg = null;
-                member.ClassId = register.ClassId;
+                member.ClassId = _memberRepository.getClassId(register.Class);;
                 member.StudentId = register.StudentId;
+            
             }
             member.Password = HashPassword(member.Password);
             member.AuthCode = _mailService.AuthCode();
@@ -172,9 +188,13 @@ namespace angel1953_backend.Services
         public string GetRole(string account)
         {
             Member member = GetMemberByAccount(account);
-            if (member.IsTeacher)
+            if (member.IsTeacher == 1)
             {
                 return "Teacher";
+            } 
+            else if (member.IsTeacher == 2)
+            {
+                return "Counselor";
             }
             return "Student";
         }
@@ -202,6 +222,22 @@ namespace angel1953_backend.Services
             return handler.WriteToken(token);
         }
 
+        #endregion
+
+        #region 取得國中名單
+        public List<MidSchool> GetMidSchoolList()
+        {
+            List<MidSchool> midSchool = _memberRepository.getMidSchoolList();
+            return midSchool;
+        }
+        #endregion
+
+        #region 取得高中名單
+        public List<School> GetSchoolList()
+        {
+            List<School> School = _memberRepository.getSchoolList();
+            return School;
+        }
         #endregion
     }
 }

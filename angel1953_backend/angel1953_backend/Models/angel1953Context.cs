@@ -13,6 +13,8 @@ public partial class angel1953Context : DbContext
 
     public virtual DbSet<BeBullyinger> BeBullyinger { get; set; }
 
+    public virtual DbSet<BullyingDetect> BullyingDetect { get; set; }
+
     public virtual DbSet<Bullyinger> Bullyinger { get; set; }
 
     public virtual DbSet<Class> Class { get; set; }
@@ -22,6 +24,8 @@ public partial class angel1953Context : DbContext
     public virtual DbSet<Information> Information { get; set; }
 
     public virtual DbSet<Member> Member { get; set; }
+
+    public virtual DbSet<MidSchool> MidSchool { get; set; }
 
     public virtual DbSet<Platform> Platform { get; set; }
 
@@ -68,6 +72,16 @@ public partial class angel1953Context : DbContext
             entity.HasOne(d => d.AccountNavigation).WithMany(p => p.BeBullyinger)
                 .HasForeignKey(d => d.Account)
                 .HasConstraintName("FK_BeBullyinger_Member");
+        });
+
+        modelBuilder.Entity<BullyingDetect>(entity =>
+        {
+            entity.Property(e => e.Date).HasColumnType("datetime");
+
+            entity.HasOne(d => d.Bullyinger).WithMany(p => p.BullyingDetect)
+                .HasForeignKey(d => d.BullyingerId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_BullyingDetect_Bullyinger");
         });
 
         modelBuilder.Entity<Bullyinger>(entity =>
@@ -153,11 +167,7 @@ public partial class angel1953Context : DbContext
             entity.Property(e => e.Name)
                 .HasMaxLength(20)
                 .UseCollation("SQL_Latin1_General_CP1_CI_AS");
-            entity.Property(e => e.Password)
-                .HasMaxLength(20)
-                .IsUnicode(false)
-                .IsFixedLength()
-                .UseCollation("SQL_Latin1_General_CP1_CI_AS");
+            entity.Property(e => e.Password).IsUnicode(false);
             entity.Property(e => e.StudentId)
                 .HasMaxLength(50)
                 .IsUnicode(false)
@@ -168,10 +178,21 @@ public partial class angel1953Context : DbContext
                 .HasForeignKey(d => d.ClassId)
                 .HasConstraintName("FK_Member_Class");
 
+            entity.HasOne(d => d.MidSchool).WithMany(p => p.Member)
+                .HasForeignKey(d => d.MidSchoolId)
+                .HasConstraintName("FK_Member_MidSchool");
+
             entity.HasOne(d => d.School).WithMany(p => p.Member)
                 .HasForeignKey(d => d.SchoolId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Member__SchoolId__38996AB5");
+                .HasConstraintName("FK_Member_School");
+        });
+
+        modelBuilder.Entity<MidSchool>(entity =>
+        {
+            entity.Property(e => e.MidSchoolId).ValueGeneratedNever();
+            entity.Property(e => e.MidSchool1)
+                .HasMaxLength(50)
+                .HasColumnName("MidSchool");
         });
 
         modelBuilder.Entity<Platform>(entity =>
@@ -288,10 +309,6 @@ public partial class angel1953Context : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__Report__Platform__571DF1D5");
 
-            entity.HasOne(d => d.School).WithMany(p => p.Report)
-                .HasForeignKey(d => d.SchoolId)
-                .HasConstraintName("FK__Report__SchoolId__59FA5E80");
-
             entity.HasOne(d => d.Type).WithMany(p => p.Report)
                 .HasForeignKey(d => d.TypeId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -327,11 +344,10 @@ public partial class angel1953Context : DbContext
 
         modelBuilder.Entity<School>(entity =>
         {
-            entity.HasKey(e => e.SchoolId).HasName("PK__School__3DA4675BA7B2B194");
-
-            entity.Property(e => e.SchoolName)
+            entity.Property(e => e.SchoolId).ValueGeneratedNever();
+            entity.Property(e => e.School1)
                 .HasMaxLength(50)
-                .UseCollation("SQL_Latin1_General_CP1_CI_AS");
+                .HasColumnName("School");
         });
 
         OnModelCreatingPartial(modelBuilder);
