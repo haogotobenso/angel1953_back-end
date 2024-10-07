@@ -20,7 +20,7 @@ namespace angel1953_backend.Controllers
         {
                 string searchTerm = "中";
                 var entities = await _context.School
-                .Where(e => e.SchoolName.Contains(searchTerm))  // LINQ 查詢條件
+                .Where(e => e.School1.Contains(searchTerm))  // LINQ 查詢條件
                 .ToListAsync();
 
             return Ok(entities);

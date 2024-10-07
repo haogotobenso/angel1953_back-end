@@ -15,9 +15,11 @@ public partial class Member
 
     public string? AuthCode { get; set; }
 
-    public bool IsTeacher { get; set; }
+    public byte IsTeacher { get; set; }
 
-    public int SchoolId { get; set; }
+    public int? SchoolId { get; set; }
+
+    public int? MidSchoolId { get; set; }
 
     public byte[]? TeacherImg { get; set; }
 
@@ -31,9 +33,11 @@ public partial class Member
 
     public virtual Class? Class { get; set; }
 
+    public virtual MidSchool? MidSchool { get; set; }
+
     public virtual ICollection<Recovery> Recovery { get; set; } = new List<Recovery>();
 
     public virtual ICollection<Report> Report { get; set; } = new List<Report>();
 
-    public virtual School School { get; set; } = null!;
+    public virtual School? School { get; set; }
 }
