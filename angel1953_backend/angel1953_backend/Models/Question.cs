@@ -7,11 +7,11 @@ public partial class Question
 {
     public int QuestionId { get; set; }
 
-    public string Question1 { get; set; } = null!;
+    public string? Question1 { get; set; }
 
-    public string Answer { get; set; } = null!;
+    public string? Answer { get; set; }
 
-    public string Option1 { get; set; } = null!;
+    public string? Option1 { get; set; }
 
     public string? Option2 { get; set; }
 

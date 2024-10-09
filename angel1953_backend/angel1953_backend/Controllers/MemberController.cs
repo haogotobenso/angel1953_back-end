@@ -31,7 +31,7 @@ namespace angel1953_backend.Controllers
         [HttpGet("GetMidSchoolList")]
         public IActionResult GetMidSchoolList()
         {
-            List<MidSchool> midSchool = _memberService.GetMidSchoolList();
+            List<School> midSchool = _memberService.GetSchoolList(false);
             var msg = new { Status = 200, Message = midSchool };
             var jsonmsg = JsonConvert.SerializeObject(msg);
             return Content(jsonmsg, "application/json");
@@ -43,7 +43,7 @@ namespace angel1953_backend.Controllers
         [HttpGet("GetSchoolList")]
         public IActionResult GetSchoolList()
         {
-            List<School> School = _memberService.GetSchoolList();
+            List<School> School = _memberService.GetSchoolList(true);
             var msg = new { Status = 200, Message = School };
             var jsonmsg = JsonConvert.SerializeObject(msg);
             return Content(jsonmsg, "application/json");
@@ -64,12 +64,13 @@ namespace angel1953_backend.Controllers
                     member.TeacherImg = memoryStream.ToArray(); // 將圖片儲存為 byte[]
                 }
             }
-            if(member.MidSchoolId!=null && member.SchoolId!=null)
+            if(member.IsTeacher == 0 && member.FBurl == null)
             {
-                var msg = new { Status = 400, Message = "學校僅能選擇一學制" };
+                var msg = new { Status = 400, Message = "學生須輸入Facebook連結" };
                 var jsonmsg = JsonConvert.SerializeObject(msg);
-                return Content(jsonmsg, "application/json");
+                   return Content(jsonmsg, "application/json");
             }
+            
             if (member.Password == member.PasswordCheck)
             {
                 if (_memberService.CheckAccount(member.Account))

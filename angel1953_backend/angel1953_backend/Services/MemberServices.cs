@@ -31,18 +31,20 @@ namespace angel1953_backend.Services
             member.Password = register.Password;
             member.Name = register.Name;
             member.Email = register.Email;
-            if(register.MidSchoolId == null) //高中
-            {
-                member.SchoolId = register.SchoolId;
-                member.MidSchoolId = null;
-            }
-            else if(register.SchoolId == null) //國中
-            {
-                member.SchoolId = null;
-                member.MidSchoolId = register.MidSchoolId;
-            }
+            member.SchoolId = register.SchoolId;
+            // if(register.MidSchoolId == null) //高中
+            // {
+            //     member.SchoolId = register.SchoolId;
+            //     member.MidSchoolId = null;
+            // }
+            // else if(register.SchoolId == null) //國中
+            // {
+            //     member.SchoolId = null;
+            //     member.MidSchoolId = register.MidSchoolId;
+            // }
             //member.SchoolId = _memberRepository.getSchoolId(register.School);
             member.IsTeacher = register.IsTeacher;
+            member.FBurl = register.FBurl;
             if (register.IsTeacher==1) //老師
             {
                 member.TeacherImg = register.TeacherImg;
@@ -224,18 +226,18 @@ namespace angel1953_backend.Services
 
         #endregion
 
-        #region 取得國中名單
-        public List<MidSchool> GetMidSchoolList()
-        {
-            List<MidSchool> midSchool = _memberRepository.getMidSchoolList();
-            return midSchool;
-        }
-        #endregion
+        // #region 取得國中名單
+        // public List<MidSchool> GetMidSchoolList()
+        // {
+        //     List<MidSchool> midSchool = _memberRepository.getMidSchoolList();
+        //     return midSchool;
+        // }
+        // #endregion
 
-        #region 取得高中名單
-        public List<School> GetSchoolList()
+        #region 取得學校名單
+        public List<School> GetSchoolList(bool IsHigh)
         {
-            List<School> School = _memberRepository.getSchoolList();
+            List<School> School = _memberRepository.getSchoolList(IsHigh);
             return School;
         }
         #endregion

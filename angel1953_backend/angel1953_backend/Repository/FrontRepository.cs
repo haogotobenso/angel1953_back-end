@@ -116,11 +116,19 @@ namespace angel1953_backend.Repository
             }
         }
         #endregion
+
+
         #region 作答紀錄單筆詳細
         public List<RecoveryDetailDto> getOneRecord(string user, int Rid)
         {
             try
             {
+                var recovery = _context.Recovery.FirstOrDefault(r => r.RecoveryId == Rid && r.Account ==user);
+                if(recovery == null)
+                {
+                    List<RecoveryDetailDto> Empty = new List<RecoveryDetailDto>();
+                    return Empty;
+                }
                 // 首先獲取所有問題
                 var allQuestions = _context.Question.ToList();
                 // 然後獲取用戶的作答記錄

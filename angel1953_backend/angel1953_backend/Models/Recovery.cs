@@ -9,11 +9,9 @@ public partial class Recovery
 
     public DateTime Time { get; set; }
 
-    public string Account { get; set; } = null!;
+    public string? Account { get; set; }
 
     public int Correct { get; set; }
-
-    public virtual Member AccountNavigation { get; set; } = null!;
 
     public virtual ICollection<RecoveryRecord> RecoveryRecord { get; set; } = new List<RecoveryRecord>();
 }
