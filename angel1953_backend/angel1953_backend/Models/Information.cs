@@ -7,7 +7,7 @@ public partial class Information
 {
     public int InformationId { get; set; }
 
-    public string Information1 { get; set; } = null!;
+    public string? Information1 { get; set; }
 
     public int QuestionId { get; set; }
 

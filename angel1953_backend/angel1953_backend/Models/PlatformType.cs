@@ -7,7 +7,7 @@ public partial class PlatformType
 {
     public int PlatformTypeId { get; set; }
 
-    public string PlatformTypeName { get; set; } = null!;
+    public string? PlatformTypeName { get; set; }
 
     public virtual ICollection<Platform> Platform { get; set; } = new List<Platform>();
 }

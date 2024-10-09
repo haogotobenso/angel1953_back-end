@@ -25,11 +25,11 @@ namespace angel1953_backend.Dtos
 
         public int? SchoolId { get; set; }
 
-        public int? MidSchoolId {get; set;}
-
         public string? Class { get; set; }
 
         public int? ClassId { get; set; }
+
+        public string? FBurl {get; set;}
 
         public string? StudentId { get; set; }
         

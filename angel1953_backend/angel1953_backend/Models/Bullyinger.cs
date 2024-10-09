@@ -9,15 +9,13 @@ public partial class Bullyinger
 
     public string Bullyinger1 { get; set; } = null!;
 
-    public string FBurl { get; set; } = null!;
+    public int postTimes { get; set; }
 
-    public string? LinkToCode { get; set; }
+    public int pointTimes { get; set; }
 
-    public string? Account { get; set; }
+    public string Account { get; set; } = null!;
 
-    public virtual Member? AccountNavigation { get; set; }
+    public virtual Member AccountNavigation { get; set; } = null!;
 
     public virtual ICollection<BullyingDetect> BullyingDetect { get; set; } = new List<BullyingDetect>();
-
-    public virtual ICollection<ReportDetail> ReportDetail { get; set; } = new List<ReportDetail>();
 }

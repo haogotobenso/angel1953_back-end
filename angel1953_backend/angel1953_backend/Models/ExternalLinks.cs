@@ -7,9 +7,9 @@ public partial class ExternalLinks
 {
     public int LinkId { get; set; }
 
-    public string Title { get; set; } = null!;
+    public string? Title { get; set; }
 
-    public string Link { get; set; } = null!;
+    public string? Link { get; set; }
 
     public DateTime LinkTime { get; set; }
 }

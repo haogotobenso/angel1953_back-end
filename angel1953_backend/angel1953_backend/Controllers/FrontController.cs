@@ -13,7 +13,7 @@ namespace angel1953_backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class FrontController : ControllerBase
     {
         private readonly FrontService _frontservice ;
@@ -66,7 +66,7 @@ namespace angel1953_backend.Controllers
         public IActionResult GetOneRecord([FromBody] int recoveryId)
         {
             var user = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            var result = _frontservice.GetOneRecord("Teacher1",recoveryId);
+            var result = _frontservice.GetOneRecord(user,recoveryId);
             var msg = new { Status = 200, Message = result};
             var jsonmsg = JsonConvert.SerializeObject(msg);
             return Content(jsonmsg, "application/json");
