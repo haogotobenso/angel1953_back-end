@@ -259,6 +259,8 @@ public partial class angel1953Context : DbContext
         {
             entity.HasKey(e => e.RecordId).HasName("PK__Recovery__FBDF78E99C81D181");
 
+            entity.Property(e => e.UserAnswer).IsUnicode(false);
+
             entity.HasOne(d => d.Question).WithMany(p => p.RecoveryRecord)
                 .HasForeignKey(d => d.QuestionId)
                 .OnDelete(DeleteBehavior.ClientSetNull)

@@ -5,6 +5,7 @@ using System.Text;
 using angel1953_backend.Models;
 using angel1953_backend.Services;
 using angel1953_backend.Repository;
+using angel1953_backend.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -49,9 +50,12 @@ builder.Services.AddAuthorization(options =>
 
 builder.Services.AddControllers();
 builder.Services.AddScoped<MemberServices>();
+builder.Services.AddScoped<FrontService>();
 builder.Services.AddScoped<MailService>();
-
 builder.Services.AddScoped<MemberRepository>();
+builder.Services.AddScoped<FrontRepository>();
+
+
 
 var app = builder.Build();
 
