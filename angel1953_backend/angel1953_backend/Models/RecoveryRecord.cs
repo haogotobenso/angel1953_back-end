@@ -11,6 +11,8 @@ public partial class RecoveryRecord
 
     public int QuestionId { get; set; }
 
+    public string UserAnswer { get; set; } = null!;
+
     public virtual Question Question { get; set; } = null!;
 
     public virtual Recovery Recovery { get; set; } = null!;
