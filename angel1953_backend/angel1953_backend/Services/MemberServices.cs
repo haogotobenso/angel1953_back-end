@@ -60,7 +60,7 @@ namespace angel1953_backend.Services
             else //學生
             {
                 member.TeacherImg = null;
-                member.ClassId = _memberRepository.getClassId(register.Class);;
+                member.ClassId = _memberRepository.getClassId(register.Class);
                 member.StudentId = register.StudentId;
             
             }

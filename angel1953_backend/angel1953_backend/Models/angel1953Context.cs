@@ -11,11 +11,15 @@ public partial class angel1953Context : DbContext
     {
     }
 
-    public virtual DbSet<BullyingDetect> BullyingDetect { get; set; }
+    public virtual DbSet<Book> Book { get; set; }
 
     public virtual DbSet<Bullyinger> Bullyinger { get; set; }
 
+    public virtual DbSet<BullyingerPost> BullyingerPost { get; set; }
+
     public virtual DbSet<Class> Class { get; set; }
+
+    public virtual DbSet<CrawlerLink> CrawlerLink { get; set; }
 
     public virtual DbSet<ExternalLinks> ExternalLinks { get; set; }
 
@@ -35,39 +39,46 @@ public partial class angel1953Context : DbContext
 
     public virtual DbSet<School> School { get; set; }
 
+    public virtual DbSet<VideoLink> VideoLink { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.UseCollation("Chinese_PRC_CI_AS");
 
-        modelBuilder.Entity<BullyingDetect>(entity =>
+        modelBuilder.Entity<Book>(entity =>
         {
-            entity.HasKey(e => e.DetectId).HasName("PK__Bullying__76D0D531DB77DEA1");
+            entity.HasKey(e => e.BookId).HasName("PK__Book__3DE0C2078222E0C3");
 
-            entity.Property(e => e.Date).HasColumnType("datetime");
-
-            entity.HasOne(d => d.Bullyinger).WithMany(p => p.BullyingDetect)
-                .HasForeignKey(d => d.BullyingerId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__BullyingD__Bully__6FB49575");
+            entity.Property(e => e.Author).HasMaxLength(40);
+            entity.Property(e => e.BookName).HasMaxLength(100);
+            entity.Property(e => e.PublicDate).HasColumnType("datetime");
         });
 
         modelBuilder.Entity<Bullyinger>(entity =>
         {
-            entity.HasKey(e => e.BullyingerId).HasName("PK__Bullying__1DCD3B6D1CEEB92F");
+            entity.HasKey(e => e.BullyingerId).HasName("PK__Bullying__1DCD3B6DBF9E874E");
 
-            entity.Property(e => e.BullyingerId).ValueGeneratedNever();
             entity.Property(e => e.Account)
                 .HasMaxLength(20)
                 .IsUnicode(false);
-            entity.Property(e => e.Bullyinger1)
-                .HasMaxLength(50)
-                .IsUnicode(false)
-                .HasColumnName("Bullyinger");
+            entity.Property(e => e.FBurl).IsUnicode(false);
+            entity.Property(e => e.FirstDate).HasColumnType("datetime");
 
             entity.HasOne(d => d.AccountNavigation).WithMany(p => p.Bullyinger)
                 .HasForeignKey(d => d.Account)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Bullyinge__Accou__6CD828CA");
+                .HasConstraintName("FK__Bullyinge__Accou__7849DB76");
+        });
+
+        modelBuilder.Entity<BullyingerPost>(entity =>
+        {
+            entity.HasKey(e => e.BPId).HasName("PK__Bullying__3876B6AC479D94A3");
+
+            entity.Property(e => e.Bullyinger)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.FBurl).IsUnicode(false);
+            entity.Property(e => e.PostTime).HasColumnType("datetime");
+            entity.Property(e => e.Posturl).IsUnicode(false);
         });
 
         modelBuilder.Entity<Class>(entity =>
@@ -75,6 +86,14 @@ public partial class angel1953Context : DbContext
             entity.Property(e => e.Class1)
                 .IsUnicode(false)
                 .HasColumnName("Class");
+        });
+
+        modelBuilder.Entity<CrawlerLink>(entity =>
+        {
+            entity.HasKey(e => e.LinkId).HasName("PK__CrawlerL__2D1221352D61BC40");
+
+            entity.Property(e => e.FBLink).IsUnicode(false);
+            entity.Property(e => e.LinkName).HasMaxLength(50);
         });
 
         modelBuilder.Entity<ExternalLinks>(entity =>
@@ -188,6 +207,17 @@ public partial class angel1953Context : DbContext
             entity.Property(e => e.School1)
                 .HasMaxLength(50)
                 .HasColumnName("School");
+        });
+
+        modelBuilder.Entity<VideoLink>(entity =>
+        {
+            entity.HasKey(e => e.VideoId).HasName("PK__VideoLin__BAE5126A88411C05");
+
+            entity.Property(e => e.VideoImg).HasColumnType("image");
+            entity.Property(e => e.VideoLink1)
+                .IsUnicode(false)
+                .HasColumnName("VideoLink");
+            entity.Property(e => e.VideoName).HasMaxLength(100);
         });
 
         OnModelCreatingPartial(modelBuilder);
