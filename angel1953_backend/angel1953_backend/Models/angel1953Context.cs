@@ -77,6 +77,7 @@ public partial class angel1953Context : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.FBurl).IsUnicode(false);
+            entity.Property(e => e.KeyWord).HasMaxLength(100);
             entity.Property(e => e.PostTime).HasColumnType("datetime");
             entity.Property(e => e.Posturl).IsUnicode(false);
         });

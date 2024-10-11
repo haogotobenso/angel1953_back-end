@@ -16,4 +16,6 @@ public partial class BullyingerPost
     public DateTime PostTime { get; set; }
 
     public string? Posturl { get; set; }
+
+    public string? KeyWord { get; set; }
 }

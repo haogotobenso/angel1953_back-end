@@ -15,11 +15,11 @@ builder.Services.AddDbContext<angel1953Context>(options =>
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowSpecificOrigin",
-        builder => builder.WithOrigins("http://localhost:5280")
+    options.AddPolicy("AllowOrigin",
+        builder => builder.WithOrigins("http://localhost:5500")
                           .AllowAnyHeader()
-                          .AllowAnyMethod()
-                          .AllowCredentials());
+                          .AllowAnyMethod());
+                          //.AllowCredentials());
 });
 
 var JWT = builder.Configuration.GetSection("JWT");
@@ -60,7 +60,7 @@ builder.Services.AddScoped<BackRepository>();
 
 
 var app = builder.Build();
-
+app.UseCors("AllowOrigin");
 app.UseAuthentication();
 app.UseAuthorization();
 // 配置 HTTP 請求管道
