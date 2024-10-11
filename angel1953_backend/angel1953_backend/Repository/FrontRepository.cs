@@ -181,5 +181,83 @@ namespace angel1953_backend.Repository
 
         }
         #endregion
+
+        #region 取得影片清單
+        public List<VideoLinksDto> getVideoList()
+        {
+            try
+            {
+                List<VideoLinksDto> videos = _context.VideoLink.Select(v => new VideoLinksDto
+                {
+                    VideoId = v.VideoId,
+                    VideoName = v.VideoName,
+                    ImgInnerUrl = $"/api/Front/{v.VideoId}/GetVideoImg",
+                    VideoLink1 = v.VideoLink1,
+                    LinkClick = v.LinkClick
+                })
+                .ToList();
+                return videos;
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
+        }
+        #endregion
+
+        #region 取得影片圖片
+        public byte[] getVideoImg(int id)
+        {
+            try
+            {
+               
+                  byte[] img = _context.VideoLink.Where(v => v.VideoId == id).Select(v => v.VideoImg).FirstOrDefault();
+                  return img;
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
+        }
+        #endregion
+
+        #region 增加影片瀏覽次數
+        public string addVideoClick(int videoId)
+        {
+            try
+            {
+                VideoLink video = _context.VideoLink.Where(v=>v.VideoId == videoId).FirstOrDefault();
+                if(video == null)
+                {
+                    return"找不到該筆影片資訊";
+                }
+                video.LinkClick += 1;
+                _context.SaveChanges();
+                return "已增加一點閱數";
+
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
+
+        }
+        #endregion
+
+        #region 取得書籍資訊
+        public List<Book> getBookList()
+        {
+            try
+            {
+                List<Book> book = _context.Book.ToList();
+                return book;
+
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
+        }
+        #endregion
     }
 }

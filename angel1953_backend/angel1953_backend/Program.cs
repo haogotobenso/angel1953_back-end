@@ -51,9 +51,11 @@ builder.Services.AddAuthorization(options =>
 builder.Services.AddControllers();
 builder.Services.AddScoped<MemberServices>();
 builder.Services.AddScoped<FrontService>();
+builder.Services.AddScoped<BackService>();
 builder.Services.AddScoped<MailService>();
 builder.Services.AddScoped<MemberRepository>();
 builder.Services.AddScoped<FrontRepository>();
+builder.Services.AddScoped<BackRepository>();
 
 
 

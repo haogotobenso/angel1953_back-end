@@ -11,6 +11,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.AspNetCore.Mvc.RazorPages.Infrastructure;
+using OfficeOpenXml.Utils.TypeConversion;
 
 namespace angel1953_backend.Services
 {
@@ -56,6 +57,39 @@ namespace angel1953_backend.Services
         {  
             var OneRecord = _frontrepository.getOneRecord(user,Rid);
             return OneRecord;
+        }
+
+        #endregion
+
+        #region 取得影片清單
+        public List<VideoLinksDto> GetVideoList()
+        {
+            List<VideoLinksDto> VideoList = _frontrepository.getVideoList();
+            return VideoList;
+        }
+
+
+        #endregion
+
+        #region 取得影片縮圖
+
+        public byte[] GetVideoImg(int id)
+        {
+            return _frontrepository.getVideoImg(id);
+        }
+        #endregion
+
+        #region 增加影片瀏覽次數
+        public string AddVideoClick(int Id)
+        {
+            return _frontrepository.addVideoClick(Id);
+        }
+        #endregion
+
+        #region 取得書籍資訊
+        public List<Book> GetBookList()
+        {
+            return _frontrepository.getBookList();
         }
 
         #endregion
