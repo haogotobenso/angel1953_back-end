@@ -35,7 +35,7 @@ namespace angel1953_backend.Controllers
         #endregion
 
         #region 使用者回答題目
-        [HttpPost("AnsQnestion")]
+        [HttpPost("AnsQuestion")]
         public IActionResult AnsQuestion([FromBody]List<AnswerDto> answer)
         {
             var user = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -73,6 +73,49 @@ namespace angel1953_backend.Controllers
         }
         #endregion
 
+        #region 取得影片清單
+        [HttpGet("GetVideoList")]
+        public IActionResult GetVideoList()
+        {
+            var result = _frontservice.GetVideoList();
+            var msg = new { Status = 200, Message = result};
+            var jsonmsg = JsonConvert.SerializeObject(msg);
+            return Content(jsonmsg, "application/json");
+        }
+
+        #endregion
+
+        #region 取得影片圖片
+        [HttpGet("{VideoId}/GetVideoImg")]
+        public IActionResult GetVideoImg(int VideoId)
+        {
+            var thumbnail = _frontservice.GetVideoImg(VideoId);
+            if (thumbnail == null) return NotFound();
+            return File(thumbnail, "image/jpeg");
+        }
+        #endregion
+
+        #region 增加影片瀏覽次數
+        [HttpGet("AddVideoClick")]
+        public IActionResult AddVideoClick(int VideoId)
+        {
+            string result = _frontservice.AddVideoClick(VideoId);
+            var msg = new { Status = 200, Message = result};
+            var jsonmsg = JsonConvert.SerializeObject(msg);
+            return Content(jsonmsg, "application/json");
+        }
+        #endregion
+
+        #region 取得書籍資訊
+        [HttpGet("GetBookList")]
+        public IActionResult GetBookList()
+        {
+            var result = _frontservice.GetBookList();
+            var msg = new { Status = 200, Message = result};
+            var jsonmsg = JsonConvert.SerializeObject(msg);
+            return Content(jsonmsg, "application/json");
+        }
+        #endregion
 
         #region 取得帳號測試
         [HttpGet("trytrysee")]
@@ -92,5 +135,7 @@ namespace angel1953_backend.Controllers
             
         }
         #endregion
+
+        
     }
 }
