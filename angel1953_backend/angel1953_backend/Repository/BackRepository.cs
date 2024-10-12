@@ -51,14 +51,22 @@ namespace angel1953_backend.Repository
         }
         #endregion
         #region 刪除一筆書籍
-        public string deleteOneBook(int bookid)
+        public bool deleteOneBook(int bookid)
         {
             try
             {
                 Book book = _context.Book.Where(b=>b.BookId == bookid).SingleOrDefault();
-                _context.Book.Remove(book);
-                _context.SaveChanges();
-                return "已成功刪除";
+                if(book == null)
+                {
+                    return false;
+                }
+                else
+                {
+                    _context.Book.Remove(book);
+                    _context.SaveChanges();
+                    return true;
+                }
+                
             }
             catch(Exception ex)
             {
@@ -123,14 +131,22 @@ namespace angel1953_backend.Repository
         #endregion
 
         #region 刪除一筆影片
-        public string deleteOneVideo(int Videoid)
+        public bool deleteOneVideo(int Videoid)
         {
             try
             {
                 VideoLink video = _context.VideoLink.Where(v=>v.VideoId == Videoid).SingleOrDefault();
-                _context.VideoLink.Remove(video);
-                _context.SaveChanges();
-                return "已成功刪除";
+                if(video==null)
+                {
+                    return false;
+                }
+                else
+                {
+                    _context.VideoLink.Remove(video);
+                    _context.SaveChanges();
+                    return true;
+                }
+                
             }
             catch(Exception ex)
             {
@@ -153,7 +169,79 @@ namespace angel1953_backend.Repository
                 throw new Exception (ex.ToString());
             }
         }
+        #endregion
 
+        #region 新增FB爬蟲連結
+        public string addFBLink(CrawlerLink FBLink)
+        {
+            try
+            {
+                _context.CrawlerLink.Add(FBLink);
+                _context.SaveChanges();
+                return "新增Facebook爬蟲連結成功";
+
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
+        }
+        #endregion
+
+        #region 取得FB爬蟲連結表
+        public List<CrawlerLink> getFBLinkList()
+        {
+            try
+            {
+                List<CrawlerLink> LinkList = _context.CrawlerLink.ToList();
+                return LinkList;
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
+        }
+        #endregion 
+
+        #region 刪除一筆FB爬蟲連結
+        public bool deleteFBLink(int FBLink)
+        {
+            try
+            {
+                CrawlerLink Link = _context.CrawlerLink.Where(l=>l.LinkId ==FBLink).FirstOrDefault();
+                
+                if(Link==null)
+                {
+                    return false;
+                }
+                else
+                {
+                    _context.Remove(Link);
+                    _context.SaveChanges();
+                    return true;
+                }
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
+
+        }
+        #endregion
+
+        #region 取得素養網路爬蟲資料
+        public List<ExternalLinks> getExtLink()
+        {
+            try
+            {
+                List<ExternalLinks> LinkList = _context.ExternalLinks.ToList();
+                return LinkList;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
+        }
         #endregion
         
     }

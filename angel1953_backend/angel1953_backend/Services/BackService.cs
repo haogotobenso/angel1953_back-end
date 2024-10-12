@@ -59,7 +59,7 @@ namespace angel1953_backend.Services
         #endregion
 
         #region 刪除一筆書籍
-        public string DeleteOneBook(int BookId)
+        public bool DeleteOneBook(int BookId)
         {
             return _backRepository.deleteOneBook(BookId);
         }
@@ -88,7 +88,7 @@ namespace angel1953_backend.Services
         #endregion
 
         #region 刪除一筆影片
-        public string DeleteOneVideo(int VideoId)
+        public bool DeleteOneVideo(int VideoId)
         {
             return _backRepository.deleteOneVideo(VideoId);
         }
@@ -100,6 +100,33 @@ namespace angel1953_backend.Services
             return _backRepository.getQuestionList();
         }
 
+        #endregion
+
+        #region 新增FB爬蟲連結
+        public string AddFBLink(CrawlerLink FBLink)
+        {
+            return _backRepository.addFBLink(FBLink);
+        }
+        #endregion
+
+        #region 取得FB爬蟲連結表
+        public List<CrawlerLink> GetFBLinkList()
+        {
+            return _backRepository.getFBLinkList();
+        }
+        #endregion 
+        #region 刪除一筆FB爬蟲連結
+        public bool DeleteFBLink(int LinkId)
+        {
+            return _backRepository.deleteFBLink(LinkId);
+        }
+        #endregion
+
+        #region 取得素養網路爬蟲資料
+        public List<ExternalLinks> GetExtLink()
+        {
+            return _backRepository.getExtLink();
+        }
         #endregion
 
         

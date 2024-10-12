@@ -93,6 +93,12 @@ namespace angel1953_backend.Services
         }
 
         #endregion
+        #region 取得素養網路爬蟲資料
+        public List<ExternalLinks> GetExtLink()
+        {
+            return _frontrepository.getExtLink();
+        }
+        #endregion
 
     }
 }
