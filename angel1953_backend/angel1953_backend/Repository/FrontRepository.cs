@@ -259,5 +259,19 @@ namespace angel1953_backend.Repository
             }
         }
         #endregion
+        #region 取得素養網路爬蟲資料
+        public List<ExternalLinks> getExtLink()
+        {
+            try
+            {
+                List<ExternalLinks> LinkList = _context.ExternalLinks.ToList();
+                return LinkList;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
+        }
+        #endregion
     }
 }

@@ -117,6 +117,17 @@ namespace angel1953_backend.Controllers
         }
         #endregion
 
+        #region 取得素養網路爬蟲資訊
+        [HttpGet("GetExtLink")]
+        public IActionResult GetExtLink()
+        {
+            var result = _frontservice.GetExtLink();
+            var msg = new { Status = 200, Message = result };
+            var jsonmsg = JsonConvert.SerializeObject(msg);
+            return Content(jsonmsg, "application/json");
+        }
+        #endregion
+
         #region 取得帳號測試
         [HttpGet("trytrysee")]
         public IActionResult TryTrySee() 

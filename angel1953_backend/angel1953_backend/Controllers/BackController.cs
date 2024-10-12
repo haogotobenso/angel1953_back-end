@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using System.IdentityModel.Tokens.Jwt;
 using angel1953_backend.Models;
 using Microsoft.Identity.Client;
+using Microsoft.VisualBasic;
 
 namespace angel1953_backend.Controllers
 {
@@ -17,9 +18,11 @@ namespace angel1953_backend.Controllers
     public class BackController : ControllerBase
     {
         private readonly BackService _backService;
-        public BackController(BackService backService)
+        private readonly PythonService _pythonService;
+        public BackController(BackService backService,PythonService pythonService)
         {
             _backService = backService;
+            _pythonService = pythonService;
         }
 
         #region 顯示所有書籍
@@ -78,9 +81,17 @@ namespace angel1953_backend.Controllers
         [HttpDelete("DeleteOneBook")]
         public IActionResult DeleteOneBook([FromQuery] int Bookid)
         {
-            var msg = _backService.DeleteOneBook(Bookid);
-            var msginfo = new { Status = 200, Message = msg };
-            var jsonmsg = JsonConvert.SerializeObject(msginfo);
+            bool result = _backService.DeleteOneBook(Bookid);
+            object msg ;
+            if(result)
+            {
+                msg = new { Status = 200, Message = "刪除成功" };
+            }
+            else
+            {
+                msg = new { Status = 400, Message = "刪除失敗" };
+            }
+            var jsonmsg = JsonConvert.SerializeObject(msg);
             return Content(jsonmsg, "application/json");
         }
 
@@ -127,9 +138,17 @@ namespace angel1953_backend.Controllers
         [HttpDelete("DeleteOneVideo")]
         public IActionResult DeleteOneVideo([FromQuery] int videoid)
         {
-            string result = _backService.DeleteOneVideo(videoid);
-            var msginfo = new { Status = 200, Message = result };
-            var jsonmsg = JsonConvert.SerializeObject(msginfo);
+            bool result = _backService.DeleteOneVideo(videoid);
+            object msg ;
+            if(result)
+            {
+                msg = new { Status = 200, Message = "刪除成功" };
+            }
+            else
+            {
+                msg = new { Status = 400, Message = "刪除失敗" };
+            }
+            var jsonmsg = JsonConvert.SerializeObject(msg);
             return Content(jsonmsg, "application/json");
         }
 
@@ -144,6 +163,72 @@ namespace angel1953_backend.Controllers
             var jsonmsg = JsonConvert.SerializeObject(msg);
             return Content(jsonmsg, "application/json");
         } 
+        #endregion
+
+        #region FB爬蟲連結新增
+        [HttpPost("AddFBLink")]
+        public IActionResult AddFBLink([FromBody] CrawlerLink FBLink)
+        {
+            string result = _backService.AddFBLink(FBLink);
+            var msg = new { Status = 200, Message = result };
+            var jsonmsg = JsonConvert.SerializeObject(msg);
+            return Content(jsonmsg, "application/json");
+
+        }
+        #endregion
+
+        #region FB爬蟲連結清單顯示
+        [HttpGet("GetFBLinkList")]
+        public IActionResult GetFBLinkList()
+        {
+            var result = _backService.GetFBLinkList();
+            var msg = new { Status = 200, Message = result };
+            var jsonmsg = JsonConvert.SerializeObject(msg);
+            return Content(jsonmsg, "application/json");
+        }
+
+        #endregion
+
+        #region FB爬蟲連結刪除
+        [HttpDelete("DeleteFBLink")]
+        public IActionResult DeleteFBLink([FromQuery] int LinkId)
+        {
+            bool result = _backService.DeleteFBLink(LinkId);
+            object msg ;
+            if(result)
+            {
+                msg = new { Status = 200, Message = "刪除成功" };
+            }
+            else
+            {
+                msg = new { Status = 400, Message = "刪除失敗" };
+            }
+            var jsonmsg = JsonConvert.SerializeObject(msg);
+            return Content(jsonmsg, "application/json");
+        }
+
+        #endregion
+
+        #region 顯示素養網路爬蟲資訊
+        [HttpGet("GetExtLink")]
+        public IActionResult GetExtLink()
+        {
+            var result = _backService.GetExtLink();
+            var msg = new { Status = 200, Message = result };
+            var jsonmsg = JsonConvert.SerializeObject(msg);
+            return Content(jsonmsg, "application/json");
+        }
+        #endregion
+
+        #region 更新素養網路爬蟲資訊
+        [HttpGet("UpdateExtLink")]
+        public IActionResult UpdateExtLink()
+        {
+            var result = _pythonService.UpdateExtLink();
+            var msg = new { Status = 200, Message = result };
+            var jsonmsg = JsonConvert.SerializeObject(msg);
+            return Content(jsonmsg, "application/json");
+        }
         #endregion
 
         #region 取得帳號測試
@@ -164,5 +249,7 @@ namespace angel1953_backend.Controllers
             
         }
         #endregion
+
+    
     }
 }
