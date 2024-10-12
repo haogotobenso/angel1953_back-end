@@ -13,5 +13,5 @@ public partial class VideoLink
 
     public string VideoLink1 { get; set; } = null!;
 
-    public int LinkClick { get; set; }
+    public int? LinkClick { get; set; }
 }

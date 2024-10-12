@@ -15,6 +15,6 @@ namespace angel1953_backend.Dtos
 
         public string VideoLink1 { get; set; } = null!;
 
-        public int LinkClick { get; set; }
+        public int? LinkClick { get; set; }
     }
 }

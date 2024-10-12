@@ -7,7 +7,7 @@ public partial class Class
 {
     public int ClassId { get; set; }
 
-    public string? Class1 { get; set; }
+    public string Class1 { get; set; } = null!;
 
     public virtual ICollection<Member> Member { get; set; } = new List<Member>();
 }

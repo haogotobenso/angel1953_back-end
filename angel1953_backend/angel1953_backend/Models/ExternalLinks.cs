@@ -11,5 +11,5 @@ public partial class ExternalLinks
 
     public string? Link { get; set; }
 
-    public DateTime LinkTime { get; set; }
+    public DateTime? LinkTime { get; set; }
 }

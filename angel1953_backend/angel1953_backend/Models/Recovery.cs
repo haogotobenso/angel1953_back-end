@@ -13,5 +13,7 @@ public partial class Recovery
 
     public int Correct { get; set; }
 
+    public virtual Member? AccountNavigation { get; set; }
+
     public virtual ICollection<RecoveryRecord> RecoveryRecord { get; set; } = new List<RecoveryRecord>();
 }

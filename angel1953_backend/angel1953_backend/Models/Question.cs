@@ -17,7 +17,5 @@ public partial class Question
 
     public string? Option3 { get; set; }
 
-    public virtual ICollection<Information> Information { get; set; } = new List<Information>();
-
     public virtual ICollection<RecoveryRecord> RecoveryRecord { get; set; } = new List<RecoveryRecord>();
 }

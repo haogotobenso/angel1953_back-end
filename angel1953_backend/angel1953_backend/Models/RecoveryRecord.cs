@@ -7,13 +7,13 @@ public partial class RecoveryRecord
 {
     public int RecordId { get; set; }
 
-    public int RecoveryId { get; set; }
+    public int? RecoveryId { get; set; }
 
-    public int QuestionId { get; set; }
+    public int? QuestionId { get; set; }
 
     public string UserAnswer { get; set; } = null!;
 
-    public virtual Question Question { get; set; } = null!;
+    public virtual Question? Question { get; set; }
 
-    public virtual Recovery Recovery { get; set; } = null!;
+    public virtual Recovery? Recovery { get; set; }
 }

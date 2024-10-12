@@ -31,5 +31,7 @@ public partial class Member
 
     public virtual Class? Class { get; set; }
 
+    public virtual ICollection<Recovery> Recovery { get; set; } = new List<Recovery>();
+
     public virtual School? School { get; set; }
 }
