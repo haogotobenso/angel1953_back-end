@@ -56,7 +56,7 @@ namespace angel1953_backend.Repository
         {
             try
             {
-                int classid = sreachClass(classname);
+                int classid = SearchClass(classname);
                 if (classid == -1)
                 {
                     classid = addClass(classname);
@@ -91,13 +91,13 @@ namespace angel1953_backend.Repository
         }
         #endregion
         #region 查詢班級
-        public int sreachClass(string classname)
+        public int SearchClass(string classname)
         {
             try
             {
                 int classid = (from c in _context.Class
                                 where c.Class1 == classname
-                               select c.ClassId).SingleOrDefault();
+                               select c.ClassId).FirstOrDefault();
                 return classid == 0 ? -1 : classid;
             }
             catch (Exception ex)

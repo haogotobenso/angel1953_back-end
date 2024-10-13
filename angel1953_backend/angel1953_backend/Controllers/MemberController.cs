@@ -56,7 +56,7 @@ namespace angel1953_backend.Controllers
         [HttpPost("Register")]
         public IActionResult Register([FromForm] RegisterDto member, [FromForm] IFormFile? teacherPhoto)
         {
-            if(member.IsTeacher == 1 || member.IsTeacher == 2)
+            if((member.IsTeacher == 1 || member.IsTeacher == 2) && teacherPhoto !=null)
             {
                 using (var memoryStream = new MemoryStream())
                 {
