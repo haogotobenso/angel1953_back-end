@@ -1,25 +1,22 @@
-
-import pyodbc
+import mysql.connector
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy.engine import URL
 import logging
 from models import Models, Base
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
-SERVER = 'localhost'
+HOST = '163.17.135.231'
 DATABASE = 'angel1953'
-USERNAME = ''
-PASSWORD = ''
-DRIVER = '{ODBC Driver 17 for SQL Server}'
+USERNAME = '1411031026'
+PASSWORD = '123456'
 
-connection_string = f'DRIVER={DRIVER};SERVER={SERVER};DATABASE={DATABASE};Trusted_Connection=yes;'
-connection_url = URL.create("mssql+pyodbc", query={"odbc_connect": connection_string})
+# MySQL connection string
+connection_string = f'mysql+mysqlconnector://{USERNAME}:{PASSWORD}@{HOST}/{DATABASE}'
 
-engine = create_engine(connection_url)
+engine = create_engine(connection_string)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
