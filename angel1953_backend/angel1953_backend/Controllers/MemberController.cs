@@ -172,6 +172,27 @@ namespace angel1953_backend.Controllers
             return Content(jsonfail, "application/json");
         }
         #endregion
+
+        #region 取得使用者帳號資訊
+        [HttpGet("GetAccountInfo")]
+        public IActionResult GetAccountInfo()
+        {
+            var user = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var UserInfo = _memberService.GetAccountInfo(user);
+            object msg;
+            if(UserInfo!=null)
+            {
+                msg = new { Status = 200, Message = UserInfo};
+            }
+            else
+            {
+                msg = new { Status = 400, Message = "尋找用戶資料時發生錯誤"};
+            }
+            var jsonsuccess = JsonConvert.SerializeObject(msg);
+            return Content(jsonsuccess, "application/json");
+        }
+        #endregion
+
         
         #region 取得帳號測試
         [Authorize]

@@ -196,6 +196,34 @@ namespace angel1953_backend.Repository
             }
         }
         #endregion
+        
+        #region 取得目前使用者帳號資訊
+        public UserInfoDetailDto getAccountInfo(string account)
+        {
+            try
+            {
+                var UserInfo = (from m in _context.Member
+                                join s in _context.School on m.SchoolId equals s.SchoolId
+                                join c in _context.Class on m.ClassId equals c.ClassId
+                                where m.Account == account
+                                select new UserInfoDetailDto
+                                {
+                                    Account =m.Account,
+                                    Email = m.Email,
+                                    Name = m.Name,
+                                    School = s.School1,
+                                    Class = c.Class1,
+                                    StudentId = m.StudentId,
+                                    FBurl = m.FBurl
+                                }).SingleOrDefault();
+                return UserInfo;
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
+        }
+        #endregion
 
         
     }
