@@ -243,6 +243,150 @@ namespace angel1953_backend.Repository
             }
         }
         #endregion
+
+        #region 取得所有事件檢視資訊
+        public List<ShowCaseDto> showCase()
+        {
+            try
+            {
+                var query = from bp in _context.BullyingerPost
+                            join b in _context.Bullyinger on bp.BullyingerId equals b.BullyingerId
+                            select new ShowCaseDto
+                            {
+                                BPId = bp.BPId,
+                                PostTime = bp.PostTime,
+                                Posturl = bp.Posturl,
+                                Bullyinger = b.Bullyinger1,
+                                FBurl = b.FBurl
+                            };
+
+                return query.ToList(); // 明確調用 ToList() 方法
+
+
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
+
+        }
+        #endregion
+        #region 取得一筆事件檢視資訊
+        public ShowCaseDetailDto showCaseDetail(int bpid)
+        {
+            try
+            {
+                var detail =  (from bp in _context.BullyingerPost
+                            join b in _context.Bullyinger on bp.BullyingerId equals b.BullyingerId
+                            where bp.BPId == bpid
+                            select new ShowCaseDetailDto
+                            {
+                                BPId = bp.BPId,
+                                Bullyinger = b.Bullyinger1,
+                                PostTime = bp.PostTime,
+                                PostInfo = bp.PostInfo,
+                                Posturl = bp.Posturl,
+                                KeyWord = bp.KeyWord
+                            }).FirstOrDefault();
+                return detail;
+
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
+        }
+        #endregion
+
+        #region 取得使用者資訊清單
+        public List<UserInfoDto> userInfo (string TorCAccount)
+        {
+            try
+            {
+                Member BackUser = _context.Member.Where(u=>u.Account == TorCAccount).SingleOrDefault();
+                if(BackUser.IsTeacher == 1)
+                {
+                    // 查詢Member表，並篩選出符合SchoolId和ClassId的記錄
+                    var query = from member in _context.Member
+                    where member.SchoolId == BackUser.SchoolId && member.ClassId == BackUser.ClassId && member.IsTeacher == 0
+                    join bullyinger in _context.Bullyinger
+                    on new { member.Account, member.FBurl } equals new { bullyinger.Account, bullyinger.FBurl } into memberBullyinger
+                    from bully in memberBullyinger.DefaultIfEmpty() // 左連接，允許找不到對應的bullyinger資料
+                    select new UserInfoDto
+                    {
+                        Account = member.Account,
+                        Name = member.Name,
+                        School = member.School != null ? member.School.School1 : string.Empty, // 如果School是null, 預設為空字串
+                        Class = member.Class != null ? member.Class.Class1 : string.Empty,   // 如果Class是null, 預設為空字串
+                        State = bully == null ? "安全" : bully.State == 1 ? "警示" : bully.State == 2 ? "危險" : "未知"
+                    };
+
+                    return query.ToList();
+
+                }
+                else if(BackUser.IsTeacher == 2)
+                {
+                    // 查詢Member表，並篩選出符合SchoolId和ClassId的記錄
+                    var query = from member in _context.Member
+                    where member.SchoolId == BackUser.SchoolId && member.IsTeacher == 0
+                    join bullyinger in _context.Bullyinger
+                    on new { member.Account, member.FBurl } equals new { bullyinger.Account, bullyinger.FBurl } into memberBullyinger
+                    from bully in memberBullyinger.DefaultIfEmpty() // 左連接，允許找不到對應的bullyinger資料
+                    select new UserInfoDto
+                    {
+                        Account = member.Account,
+                        Name = member.Name,
+                        School = member.School != null ? member.School.School1 : string.Empty, // 如果School是null, 預設為空字串
+                        Class = member.Class != null ? member.Class.Class1 : string.Empty,   // 如果Class是null, 預設為空字串
+                        State = bully == null ? "安全" : bully.State == 1 ? "警示" : bully.State == 2 ? "危險" : "未知"
+                    };
+                    return query.ToList();
+                }
+                List<UserInfoDto> EmptyDto = new List<UserInfoDto>();
+                return EmptyDto;
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
+
+        }
+        #endregion
+        #region 取得一筆使用者資訊
+        public UserInfoDetailDto getOneUserInfo(string user,string account)
+        {
+            try
+            {
+                Member BackUser = _context.Member.Where(u=>u.Account == user).SingleOrDefault();
+                var query = from member in _context.Member
+                where member.SchoolId == BackUser.SchoolId && member.IsTeacher == 0 && member.Account == account
+                join bullyinger in _context.Bullyinger
+                on new { member.Account, member.FBurl } equals new { bullyinger.Account, bullyinger.FBurl } into memberBullyinger
+                from bully in memberBullyinger.DefaultIfEmpty() // 左連接，允許找不到對應的bullyinger資料
+                select new UserInfoDetailDto
+                {
+                    Name = member.Name,
+                    Account = member.Account,
+                    Email = member.Email,
+                    School = member.School != null ? member.School.School1 : string.Empty, // 如果School是null, 預設為空字串
+                    Class = member.Class != null ? member.Class.Class1 : string.Empty,   // 如果Class是null, 預設為空字串
+                    StudentId = member.StudentId,
+                    FBurl = member.FBurl,
+                    State = bully == null ? "安全" : bully.State == 1 ? "警示" : bully.State == 2 ? "危險" : "未知",
+                    BullyingerPoint = bully == null ? 0 : bully.BullyingerPoint,
+                    BullyingerPost = bully == null ? 0 : _context.BullyingerPost.Count(p => p.BullyingerId == bully.BullyingerId)
+                };
+                return query.FirstOrDefault();
+                
+
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
+        }
+        #endregion
         
     }
-}
+}       

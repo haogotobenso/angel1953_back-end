@@ -34,6 +34,7 @@ namespace angel1953_backend.Services
         #region 上傳書本檔案
         public bool BookProcessExcel(Stream fileStream)
         {
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             using (var package = new ExcelPackage(fileStream))
             {
                 var worksheet = package.Workbook.Worksheets[0]; // 選取第一個工作表
@@ -58,9 +59,31 @@ namespace angel1953_backend.Services
         }
         #endregion
 
+        #region 下載書籍上傳定型檔
+        public byte[] GetBookExcel()
+        {
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
+            using (var package = new ExcelPackage())
+            {
+                // 建立新的工作表
+                var worksheet = package.Workbook.Worksheets.Add("Sheet1");
+
+                // 填入資料
+                worksheet.Cells[1, 1].Value = "書名";
+                worksheet.Cells[1, 2].Value = "作者";
+                worksheet.Cells[1, 3].Value = "出版日期";
+
+                // 生成 Excel 並回傳 byte[]
+                return package.GetAsByteArray();
+            }
+        }
+        #endregion
+
         #region 刪除一筆書籍
         public bool DeleteOneBook(int BookId)
         {
+
             return _backRepository.deleteOneBook(BookId);
         }
         #endregion
@@ -129,6 +152,33 @@ namespace angel1953_backend.Services
         }
         #endregion
 
+        #region 取得所有事件檢視資訊
+        public List<ShowCaseDto> ShowCase()
+        {
+            return _backRepository.showCase();
+        }
+        #endregion
+
+        #region 取得一筆資訊顯示詳細
+        public ShowCaseDetailDto ShowCaseDetail(int BPId)
+        {
+            return _backRepository.showCaseDetail(BPId);
+        }
+        #endregion
+        
+        #region 取得使用者資訊清單
+        public List<UserInfoDto> UserInfo(string TorCAccount)
+        {
+            return _backRepository.userInfo(TorCAccount);
+        }
+        #endregion
+
+        #region 取得一筆詳細使用者資訊
+        public UserInfoDetailDto GetOneUserInfo(string user,string Account)
+        {
+            return _backRepository.getOneUserInfo(user,Account);
+        }
+        #endregion
         
     }
 }
