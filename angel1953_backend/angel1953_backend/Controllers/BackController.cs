@@ -77,6 +77,17 @@ namespace angel1953_backend.Controllers
         }
         #endregion
 
+        #region 取得書籍上傳定型檔
+        [HttpGet("GetBookExcel")]
+        public IActionResult GetBookExcel()
+        {
+            var bookexcel = _backService.GetBookExcel();
+            return File(bookexcel,"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet","BookExcelEx.xlsx");
+            
+        }
+
+        #endregion
+
         #region 刪除一筆書籍
         [HttpDelete("DeleteOneBook")]
         public IActionResult DeleteOneBook([FromQuery] int Bookid)
@@ -231,6 +242,57 @@ namespace angel1953_backend.Controllers
         }
         #endregion
 
+        #region 事件檢視
+        [HttpGet("ShowCase")]
+        public IActionResult ShowCase()
+        {
+            var AllCase = _backService.ShowCase();
+            var msg = new { Status = 200, Message = AllCase };
+            var jsonmsg = JsonConvert.SerializeObject(msg);
+            return Content(jsonmsg, "application/json");
+        } 
+        #endregion
+
+        #region 事件檢視詳細
+        [HttpGet("ShowCaseDetail")]
+        public IActionResult ShowCaseDetail(int BPId)
+        {
+            var OneCase = _backService.ShowCaseDetail(BPId);
+            var msg = new { Status = 200, Message = OneCase };
+            var jsonmsg = JsonConvert.SerializeObject(msg);
+            return Content(jsonmsg, "application/json");
+
+        }
+
+        #endregion
+
+        #region 使用者資訊
+        [HttpGet("UserInfo")]
+        public IActionResult UserInfo()
+        {
+            var user = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var AllUser = _backService.UserInfo(user);
+            var msg = new { Status = 200, Message = AllUser };
+            var jsonmsg = JsonConvert.SerializeObject(msg);
+            return Content(jsonmsg, "application/json");
+
+        }
+
+        #endregion
+
+        #region 使用者資訊詳細
+        [HttpGet("UserInfoDetail")]
+        public IActionResult UserInfoDetail([FromQuery]string Account)
+        {
+            var user = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var OneUser = _backService.GetOneUserInfo(user,Account);
+            var msg = new { Status = 200, Message = OneUser };
+            var jsonmsg = JsonConvert.SerializeObject(msg);
+            return Content(jsonmsg, "application/json");
+        }
+
+        #endregion
+
         #region 取得帳號測試
         [HttpGet("trytrysee")]
         public IActionResult TryTrySee() 
@@ -249,6 +311,8 @@ namespace angel1953_backend.Controllers
             
         }
         #endregion
+
+        
 
     
     }
