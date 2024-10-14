@@ -241,5 +241,12 @@ namespace angel1953_backend.Services
             return School;
         }
         #endregion
+
+        #region 取得目前使用者資料
+        public UserInfoDetailDto GetAccountInfo(string account)
+        {
+            return _memberRepository.getAccountInfo(account);
+        }
+        #endregion
     }
 }
