@@ -16,10 +16,9 @@ builder.Services.AddDbContext<angel1953Context>(options =>
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowOrigin",
-        builder => builder.WithOrigins("http://localhost:5500")
+        builder => builder.SetIsOriginAllowed(origin => new Uri(origin).Host == "localhost")
                           .AllowAnyHeader()
                           .AllowAnyMethod());
-                          //.AllowCredentials());
 });
 
 var JWT = builder.Configuration.GetSection("JWT");
