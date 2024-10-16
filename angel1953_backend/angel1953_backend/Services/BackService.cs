@@ -31,31 +31,38 @@ namespace angel1953_backend.Services
 
         #endregion
 
-        #region 上傳書本檔案
-        public bool BookProcessExcel(Stream fileStream)
+        // #region 上傳書本檔案
+        // public bool BookProcessExcel(Stream fileStream)
+        // {
+        //     ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+        //     using (var package = new ExcelPackage(fileStream))
+        //     {
+        //         var worksheet = package.Workbook.Worksheets[0]; // 選取第一個工作表
+        //         var rowCount = worksheet.Dimension.Rows;
+        //         List<Book> BookList = new List<Book>();
+        //         for (int row = 2; row <= rowCount; row++) // 假設第一列是標題
+        //         {
+        //             Book book = new Book
+        //             {
+        //                 BookName = worksheet.Cells[row, 1].Value.ToString(),
+        //                 Author = worksheet.Cells[row, 2].Value.ToString(),
+        //                 PublicDate = DateTime.Parse(worksheet.Cells[row, 3].Value.ToString())
+        //             };
+        //             BookList.Add(book);
+                    
+                    
+        //         }
+        //         // 更新資料庫邏輯
+        //         _backRepository.UpdateBook(BookList);
+        //     }
+        //     return true;
+        // }
+        // #endregion
+
+        #region 上傳單筆書籍資料
+        public string UploadBooks(Book bookupdate)
         {
-            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-            using (var package = new ExcelPackage(fileStream))
-            {
-                var worksheet = package.Workbook.Worksheets[0]; // 選取第一個工作表
-                var rowCount = worksheet.Dimension.Rows;
-                List<Book> BookList = new List<Book>();
-                for (int row = 2; row <= rowCount; row++) // 假設第一列是標題
-                {
-                    Book book = new Book
-                    {
-                        BookName = worksheet.Cells[row, 1].Value.ToString(),
-                        Author = worksheet.Cells[row, 2].Value.ToString(),
-                        PublicDate = DateTime.Parse(worksheet.Cells[row, 3].Value.ToString())
-                    };
-                    BookList.Add(book);
-                    
-                    
-                }
-                // 更新資料庫邏輯
-                _backRepository.UpdateBook(BookList);
-            }
-            return true;
+            return _backRepository.uploadBook(bookupdate);
         }
         #endregion
 
