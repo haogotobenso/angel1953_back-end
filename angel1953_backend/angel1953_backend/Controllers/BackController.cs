@@ -14,7 +14,7 @@ namespace angel1953_backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Teacher,Admin")]
+    [Authorize(Roles = "Teacher,Counselor")]
     public class BackController : ControllerBase
     {
         private readonly BackService _backService;
