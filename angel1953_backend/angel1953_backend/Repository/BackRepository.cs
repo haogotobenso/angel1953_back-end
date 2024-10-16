@@ -18,7 +18,7 @@ namespace angel1953_backend.Repository
             _context = angel1953context;
         } 
         #region 上傳書籍
-        public void UpdateBook(List<Book> NewBook)
+        public string uploadBook(Book NewBook)
         {
             try
             {
@@ -29,6 +29,7 @@ namespace angel1953_backend.Repository
                 // 插入新資料
                 _context.Book.AddRange(NewBook);
                 _context.SaveChanges();
+                return "上傳成功";
             }
             catch(Exception ex)
             {

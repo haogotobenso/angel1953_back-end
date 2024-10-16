@@ -35,43 +35,65 @@ namespace angel1953_backend.Controllers
             return Content(jsonmsg, "application/json");
         }
         #endregion
+        // #region 新增書籍
+        // [HttpPost("UploadBooks")]
+        // public IActionResult UploadBooks(IFormFile bookexcel)
+        // {
+        //     string msg = "";
+        //     if (bookexcel == null || bookexcel.Length == 0)
+        //     {
+        //         msg = "請上傳有效的檔案";
+        //     }
+
+        //     var fileExtension = Path.GetExtension(bookexcel.FileName);
+        //     if (fileExtension != ".xls" && fileExtension != ".xlsx")
+        //     {
+        //         msg = "只支援 Excel 格式的檔案";
+        //     }
+
+        //     // 保存檔案到伺服器上，或者讀取檔案內容
+        //     using (var stream = new MemoryStream())
+        //     {
+        //         bookexcel.CopyTo(stream);
+        //         // 解析 CSV 或 Excel
+        //         var result = _backService.BookProcessExcel(stream);
+                
+        //         if (result)
+        //         {
+        //             msg = "資料已成功更新";
+        //             var msginfo = new { Status = 200, Message = msg };
+        //             var jsonmsg = JsonConvert.SerializeObject(msginfo);
+        //             return Content(jsonmsg, "application/json");
+        //         }
+        //         else
+        //         {
+        //             msg = "資料更新失敗";
+        //         }
+        //     }
+        //     var failmsginfo = new { Status = 400, Message = msg };
+        //     var failjsonmsg = JsonConvert.SerializeObject(failmsginfo);
+        //     return Content(failjsonmsg, "application/json");
+
+        // }
+        // #endregion
+
         #region 新增書籍
         [HttpPost("UploadBooks")]
-        public IActionResult UploadBooks(IFormFile bookexcel)
+        public IActionResult UploadBooks([FromBody]Book bookupdate)
         {
             string msg = "";
-            if (bookexcel == null || bookexcel.Length == 0)
+            object msginfo;
+            if(bookupdate !=null)
             {
-                msg = "請上傳有效的檔案";
+                msg = _backService.UploadBooks(bookupdate);
+                msginfo = new { Status = 200, Message = msg };
             }
-
-            var fileExtension = Path.GetExtension(bookexcel.FileName);
-            if (fileExtension != ".xls" && fileExtension != ".xlsx")
+            else
             {
-                msg = "只支援 Excel 格式的檔案";
+                msg = "請輸入遇上傳書籍";
+                msginfo = new { Status = 400, Message = msg };
             }
-
-            // 保存檔案到伺服器上，或者讀取檔案內容
-            using (var stream = new MemoryStream())
-            {
-                bookexcel.CopyTo(stream);
-                // 解析 CSV 或 Excel
-                var result = _backService.BookProcessExcel(stream);
-                
-                if (result)
-                {
-                    msg = "資料已成功更新";
-                    var msginfo = new { Status = 200, Message = msg };
-                    var jsonmsg = JsonConvert.SerializeObject(msginfo);
-                    return Content(jsonmsg, "application/json");
-                }
-                else
-                {
-                    msg = "資料更新失敗";
-                }
-            }
-            var failmsginfo = new { Status = 400, Message = msg };
-            var failjsonmsg = JsonConvert.SerializeObject(failmsginfo);
+            var failjsonmsg = JsonConvert.SerializeObject(msginfo);
             return Content(failjsonmsg, "application/json");
 
         }
