@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -11,7 +12,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 // 添加服務，包括 DbContext 並配置 SQL Server 連接字串
 builder.Services.AddDbContext<angel1953Context>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseMySql(
+        builder.Configuration.GetConnectionString("DefaultConnection"),
+        new MySqlServerVersion(new Version(5, 2, 1)),
+        mySqlOptions => mySqlOptions.EnableRetryOnFailure()
+    )
+);
 
 builder.Services.AddCors(options =>
 {
