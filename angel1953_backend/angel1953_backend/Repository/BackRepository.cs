@@ -388,6 +388,99 @@ namespace angel1953_backend.Repository
             }
         }
         #endregion
-        
+        #region 取得紅綠燈圖表
+        public ChartDto getStateChart(string user)
+        {
+            var data = new ChartDto();
+            try
+            {
+                Member BackUser = _context.Member.Where(u=>u.Account == user).SingleOrDefault();
+                var query = from member in _context.Member
+                where member.SchoolId == BackUser.SchoolId && member.ClassId == BackUser.ClassId && member.IsTeacher == 0
+                join bullyinger in _context.Bullyinger
+                on new { member.Account, member.FBurl } equals new { bullyinger.Account, bullyinger.FBurl } into memberBullyinger
+                from bully in memberBullyinger.DefaultIfEmpty() // 左連接，允許找不到對應的bullyinger資料
+                let state = bully == null ? "安全" : bully.State == 1 ? "警示" : bully.State == 2 ? "危險" : "未知"
+                group state by state into stateGroup
+                select new 
+                {
+                    State = stateGroup.Key,       // 狀態名稱（安全、警示、危險）
+                    Count = stateGroup.Count()    // 該狀態的個數
+                };
+                var State = new StateShow
+                {
+                    Green = query.FirstOrDefault(x => x.State == "安全")?.Count ?? 0,
+                    Yellow = query.FirstOrDefault(x => x.State == "警示")?.Count ?? 0,
+                    Red = query.FirstOrDefault(x => x.State == "危險")?.Count ?? 0
+                };
+                data.Labels = ["安全","警示","危險"];
+                data.Datasets = new[]
+                {
+                    new ChartDatasetDto
+                    {
+                        Label = "本校社群紅綠燈統計圓餅圖",
+                        Data = [State.Green,State.Yellow,State.Red],
+                        BorderWidth = 1
+                    }
+                };
+                return data;
+                
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.ToString());
+
+            }
+        }
+        #endregion
+
+        #region 取得本月霸凌貼文折線圖
+        public ChartDto getBullyingPostChart(string user)
+        {
+            var data = new ChartDto();
+            // 取得當前時間和當月的第一天與最後一天
+            var now = DateTime.Now;
+            var firstDayOfMonth = new DateTime(now.Year, now.Month, 1);
+            var lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddDays(-1);
+            var allDatesInMonth = Enumerable.Range(1, DateTime.DaysInMonth(now.Year, now.Month))
+                                  .Select(day => new DateTime(now.Year, now.Month, day).ToString("yyyy-MM-dd"))
+                                  .ToArray();
+            try
+            {
+                // 查詢並按每天分組計算貼文次數
+                var query = from bp in _context.BullyingerPost
+                where bp.PostTime.HasValue && bp.PostTime.Value >= firstDayOfMonth && bp.PostTime.Value <= lastDayOfMonth
+                group bp by bp.PostTime.Value.Date into postGroup
+                select new
+                {
+                    Date = postGroup.Key,    // 分組的日期
+                    PostCount = postGroup.Count()   // 該日期的貼文數量
+                };
+                var result = query.ToList();
+                var chartData = new
+                {
+                    Dates = result.Select(r => r.Date.ToString("yyyy-MM-dd")).ToArray(),  // 將 DateTime 轉為字串陣列
+                    PostCounts = result.Select(r => r.PostCount).ToArray()                // 將貼文數量轉為整數陣列
+                };
+                data.Labels = allDatesInMonth;
+                data.Datasets = new[]
+                {
+                    new ChartDatasetDto
+                    {
+                        Label = "本月每日霸凌數量折線圖",
+                        Data = allDatesInMonth.Select(date => result.FirstOrDefault(r => r.Date.ToString("yyyy-MM-dd") == date)?.PostCount ?? 0).ToArray(),
+                        BorderWidth = 1
+                    }
+                };
+                return data;
+
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
+
+        }
+        #endregion
     }
 }       

@@ -186,6 +186,20 @@ namespace angel1953_backend.Services
             return _backRepository.getOneUserInfo(user,Account);
         }
         #endregion
+
+        #region 取得紅綠燈圖表
+        public ChartDto GetStateChart(string user)
+        {
+            return _backRepository.getStateChart(user);
+        }
+        #endregion
+        #region 取得本月霸凌貼文折線圖
+        public ChartDto GetBullyingPostChart(string user)
+        {
+            return _backRepository.getBullyingPostChart(user);
+        }
+
+        #endregion
         
     }
 }

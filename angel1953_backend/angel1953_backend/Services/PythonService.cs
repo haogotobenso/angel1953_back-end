@@ -29,15 +29,26 @@ namespace angel1953_backend.Services
             _httpClient = httpClient;
         }
         #region 啟動更新素養連結爬蟲API
-        public string UpdateExtLink()
+        public string UpdateExtLinkAPI()
         {
             // Python API 的 URL
-            string UpdateExtLinkUrl = "http://localhost:5000/api/some-endpoint";
+            string UpdateExtLinkUrl = "http://localhost:5000/api/";
             // 發送 GET 請求給 Python API，同步操作
             HttpResponseMessage response = _httpClient.GetAsync(UpdateExtLinkUrl).Result;
             // 確保請求成功
             response.EnsureSuccessStatusCode();
             // 讀取回應的內容，同步操作
+            string responseData = response.Content.ReadAsStringAsync().Result;
+            return responseData;
+        }
+        #endregion
+
+        #region 啟動單次爬蟲流程
+        public string OnceFBcrawlerAPI()
+        {
+            string OnceFBcrawlerUrl = "http://localhost:5000/api/";
+            HttpResponseMessage response = _httpClient.GetAsync(OnceFBcrawlerUrl).Result;
+            response.EnsureSuccessStatusCode();
             string responseData = response.Content.ReadAsStringAsync().Result;
             return responseData;
         }
