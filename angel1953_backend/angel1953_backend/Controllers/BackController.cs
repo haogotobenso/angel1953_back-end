@@ -257,7 +257,7 @@ namespace angel1953_backend.Controllers
         [HttpGet("UpdateExtLink")]
         public IActionResult UpdateExtLink()
         {
-            var result = _pythonService.UpdateExtLink();
+            var result = _pythonService.UpdateExtLinkAPI();
             var msg = new { Status = 200, Message = result };
             var jsonmsg = JsonConvert.SerializeObject(msg);
             return Content(jsonmsg, "application/json");
@@ -315,6 +315,48 @@ namespace angel1953_backend.Controllers
 
         #endregion
 
+        #region 取得紅綠燈圖表
+        [HttpGet("GetStateChart")]
+        public IActionResult GetStateChart()
+        {
+            var user = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var result = _backService.GetStateChart(user);
+            if(result != null)
+            {
+                var response = new { Status = 200, Message = result };
+                var jsonresponse = JsonConvert.SerializeObject(response);
+                return Content(jsonresponse, "application/json");
+            }
+            else
+            {
+                var response = new { Status = 400, Messaeg = result };
+                var jsonresponse = JsonConvert.SerializeObject(response);
+                return Content(jsonresponse, "application/json");
+            }
+
+        }
+        #endregion
+        #region 取得本月霸凌貼文總數折線圖
+        [HttpGet("GetBullyingPostChart")]
+        public IActionResult GetBullyingPostChart()
+        {
+            var user = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var result = _backService.GetBullyingPostChart(user);
+            if(result != null)
+            {
+                var response = new { Status = 200, Message = result };
+                var jsonresponse = JsonConvert.SerializeObject(response);
+                return Content(jsonresponse, "application/json");
+            }
+            else
+            {
+                var response = new { Status = 400, Messaeg = result };
+                var jsonresponse = JsonConvert.SerializeObject(response);
+                return Content(jsonresponse, "application/json");
+            }
+
+        }
+        #endregion
         #region 取得帳號測試
         [HttpGet("trytrysee")]
         public IActionResult TryTrySee() 
@@ -333,6 +375,8 @@ namespace angel1953_backend.Controllers
             
         }
         #endregion
+
+        
 
         
 

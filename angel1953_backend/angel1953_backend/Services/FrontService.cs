@@ -99,6 +99,19 @@ namespace angel1953_backend.Services
             return _frontrepository.getExtLink();
         }
         #endregion
+        #region 取得紅綠燈圖表
+        public ChartDto GetStateChart()
+        {
+            return _frontrepository.getStateChart();
+        }
+        #endregion
+        #region 取得本月霸凌貼文折線圖
+        public ChartDto GetBullyingPostChart()
+        {
+            return _frontrepository.getBullyingPostChart();
+        }
+
+        #endregion
 
     }
 }

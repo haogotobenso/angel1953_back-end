@@ -74,6 +74,7 @@ namespace angel1953_backend.Controllers
         #endregion
 
         #region 取得影片清單
+       
         [HttpGet("GetVideoList")]
         public IActionResult GetVideoList()
         {
@@ -86,6 +87,7 @@ namespace angel1953_backend.Controllers
         #endregion
 
         #region 取得影片圖片
+        
         [HttpGet("{VideoId}/GetVideoImg")]
         public IActionResult GetVideoImg(int VideoId)
         {
@@ -96,6 +98,7 @@ namespace angel1953_backend.Controllers
         #endregion
 
         #region 增加影片瀏覽次數
+        
         [HttpGet("AddVideoClick")]
         public IActionResult AddVideoClick(int VideoId)
         {
@@ -107,6 +110,7 @@ namespace angel1953_backend.Controllers
         #endregion
 
         #region 取得書籍資訊
+        
         [HttpGet("GetBookList")]
         public IActionResult GetBookList()
         {
@@ -118,6 +122,7 @@ namespace angel1953_backend.Controllers
         #endregion
 
         #region 取得素養網路爬蟲資訊
+        
         [HttpGet("GetExtLink")]
         public IActionResult GetExtLink()
         {
@@ -125,6 +130,53 @@ namespace angel1953_backend.Controllers
             var msg = new { Status = 200, Message = result };
             var jsonmsg = JsonConvert.SerializeObject(msg);
             return Content(jsonmsg, "application/json");
+        }
+        #endregion
+
+
+        #region 取得紅綠燈圖表
+        [AllowAnonymous]
+        [HttpGet("GetStateChart")]
+        public IActionResult GetStateChart()
+        {
+            
+            var result = _frontservice.GetStateChart();
+            if(result != null)
+            {
+                var response = new { Status = 200, Message = result };
+                var jsonresponse = JsonConvert.SerializeObject(response);
+                return Content(jsonresponse, "application/json");
+            }
+            else
+            {
+                var response = new { Status = 400, Messaeg = result };
+                var jsonresponse = JsonConvert.SerializeObject(response);
+                return Content(jsonresponse, "application/json");
+            }
+
+        }
+        #endregion
+
+        #region 取得本月霸凌貼文總數折線圖
+        [AllowAnonymous]
+        [HttpGet("GetBullyingPostChart")]
+        public IActionResult GetBullyingPostChart()
+        {
+            
+            var result = _frontservice.GetBullyingPostChart();
+            if(result != null)
+            {
+                var response = new { Status = 200, Message = result };
+                var jsonresponse = JsonConvert.SerializeObject(response);
+                return Content(jsonresponse, "application/json");
+            }
+            else
+            {
+                var response = new { Status = 400, Messaeg = result };
+                var jsonresponse = JsonConvert.SerializeObject(response);
+                return Content(jsonresponse, "application/json");
+            }
+
         }
         #endregion
 
