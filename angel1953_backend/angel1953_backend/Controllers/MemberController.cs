@@ -98,8 +98,7 @@ namespace angel1953_backend.Controllers
                 return Content(jsonsuccess, "application/json");
                 
             }
-            if{
-                       }
+        }
         #endregion
 
         #region Email認證
