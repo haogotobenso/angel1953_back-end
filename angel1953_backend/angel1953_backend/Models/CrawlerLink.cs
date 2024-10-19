@@ -10,4 +10,6 @@ public partial class CrawlerLink
     public string LinkName { get; set; } = null!;
 
     public string FBLink { get; set; } = null!;
+
+    public string Account { get; set; } = null!;
 }
