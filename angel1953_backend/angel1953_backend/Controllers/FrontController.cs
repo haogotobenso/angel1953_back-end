@@ -199,7 +199,20 @@ namespace angel1953_backend.Controllers
         }
         #endregion
 
-        
+        #region 計算關鍵字總數
+        [AllowAnonymous]
+        [HttpGet("GetKeywordSum")]
+        public IActionResult GetKeywordSum()
+        {
+            var keywordSum = _frontservice.GetKeywordSum();
+
+            var response = new { Status = 200, Message = keywordSum };
+            var jsonresponse = JsonConvert.SerializeObject(response);
+
+            return Content(jsonresponse, "application/json");
+        }
+
+        #endregion        
 
         
     }

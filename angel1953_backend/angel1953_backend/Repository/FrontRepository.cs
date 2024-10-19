@@ -367,5 +367,47 @@ namespace angel1953_backend.Repository
 
         }
         #endregion
+        #region 計算關鍵字總數
+        public Dictionary<string, int> GetKeywordSum()
+        {
+            try
+            {
+                // 從資料庫取得所有bullyingerpost資料的keyword欄位
+                var keywordList = _context.BullyingerPost.Select(b => b.KeyWord).ToList();
+
+                // 建立一個字典來儲存每個字詞出現的次數
+                Dictionary<string, int> keywordCount = new Dictionary<string, int>();
+
+                foreach (var keywords in keywordList)
+                {
+                    // 將每筆 keyword 分割（假設用逗號和空格作為分隔符）
+                    var words = keywords.Split(new char[] { ',', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+                    foreach (var word in words)
+                    {
+                        // 統計每個字詞出現的次數
+                        if (keywordCount.ContainsKey(word))
+                        {
+                            keywordCount[word]++;
+                        }
+                        else
+                        {
+                            keywordCount[word] = 1;
+                        }
+                    }
+                }
+
+                // 回傳字典
+                return keywordCount;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
+        }
+
+
+
+        #endregion
     }
 }

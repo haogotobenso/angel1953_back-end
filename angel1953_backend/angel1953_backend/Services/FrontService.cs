@@ -112,6 +112,12 @@ namespace angel1953_backend.Services
         }
 
         #endregion
+        #region 計算關鍵字總數
+        public Dictionary<string, int> GetKeywordSum()
+        {
+            return _frontrepository.GetKeywordSum();
+        }
+        #endregion
 
     }
 }
