@@ -24,6 +24,7 @@ public partial class angel1953Context : DbContext
     public virtual DbSet<RecoveryRecord> RecoveryRecord { get; set; }
     public virtual DbSet<School> School { get; set; }
     public virtual DbSet<VideoLink> VideoLink { get; set; }
+    public virtual DbSet<Todo> Todo {get;set;}
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
