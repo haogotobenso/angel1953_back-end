@@ -376,7 +376,14 @@ namespace angel1953_backend.Repository
                     FBurl = member.FBurl,
                     State = bully == null ? "安全" : bully.State == 1 ? "警示" : bully.State == 2 ? "危險" : "未知",
                     BullyingerPoint = bully == null ? 0 : bully.BullyingerPoint,
-                    BullyingerPost = bully == null ? 0 : _context.BullyingerPost.Count(p => p.BullyingerId == bully.BullyingerId)
+                    BullyingerPost = bully == null ? 0 : _context.BullyingerPost.Count(p => p.BullyingerId == bully.BullyingerId),
+                    Todo = (from todo in _context.Todo 
+                            where todo.Account == member.Account
+                            select new TodoBackDto
+                            {
+                                TodoName = todo.TodoThing  == 0 ? "影片觀賞" : todo.TodoThing == 1 ? "素養題目" : todo.TodoThing == 2 ? "學校人員處理" : "未知",
+                                TodoState = todo.State == false ? "未完成" : todo.State == true ? "已完成" :"未知"
+                            }).ToList()
                 };
                 return query.FirstOrDefault();
                 
@@ -388,6 +395,34 @@ namespace angel1953_backend.Repository
             }
         }
         #endregion
+
+        #region 學生todo老師處理狀態變更
+        public bool userTodoChage(string user,string account)
+        {
+            try
+            {
+                Member BackUser = _context.Member.Where(u=>u.Account == user).SingleOrDefault();
+                var studentTodo2 = _context.Todo.Where(t=>t.Account == account && t.TodoThing ==2 && t.State == false).FirstOrDefault();
+                if(studentTodo2 !=null)
+                {
+                    studentTodo2.State = true;
+                    _context.SaveChanges();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
+
+        }
+        #endregion
+
         #region 取得紅綠燈圖表
         public ChartDto getStateChart(string user)
         {

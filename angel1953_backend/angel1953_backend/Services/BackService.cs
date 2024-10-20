@@ -186,6 +186,12 @@ namespace angel1953_backend.Services
             return _backRepository.getOneUserInfo(user,Account);
         }
         #endregion
+        #region 學生Todo老師處理狀態變更
+        public bool UserTodoChage(string user,string account)
+        {
+            return _backRepository.userTodoChage(user,account);
+        }
+        #endregion
 
         #region 取得紅綠燈圖表
         public ChartDto GetStateChart(string user)

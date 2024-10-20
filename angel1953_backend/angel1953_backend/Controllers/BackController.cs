@@ -319,6 +319,25 @@ namespace angel1953_backend.Controllers
 
         }
         #endregion
+
+        #region 學生Todo老師狀態變更
+        [HttpGet("UserTodoChage")]
+        public IActionResult UserTodoChage([FromQuery]string account)
+        {
+            var user = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            object msg;
+            if(_backService.UserTodoChage(user,account))
+            {
+                msg = new { Status = 200, Message = "狀態變更成功" };
+            }
+            else
+            {
+                msg = new { Status = 400, Message = "狀態變更時發生錯誤" };
+            }
+            var jsonmsg = JsonConvert.SerializeObject(msg);
+            return Content(jsonmsg, "application/json");
+        }
+        #endregion
         #region 取得帳號測試
         [HttpGet("trytrysee")]
         public IActionResult TryTrySee() 
