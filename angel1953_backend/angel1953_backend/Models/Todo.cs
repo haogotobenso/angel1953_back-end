@@ -7,7 +7,7 @@ namespace angel1953_backend.Models
     {
         public int TodoId {get;set;}
         public string Account {get;set;} = null!;
-        public byte Todo1 {get;set;}
+        public byte TodoThing {get;set;}
         public bool State {get;set;}
 
 

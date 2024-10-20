@@ -225,6 +225,21 @@ namespace angel1953_backend.Repository
         }
         #endregion
 
+        #region 取得使用者Todo
+        public List<Todo> getAccountTodo(string account)
+        {
+            try
+            {
+                var todolist = _context.Todo.Where(t=>t.Account == account).ToList();
+                return todolist;
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
+        }
+        #endregion
+
         
     }
 }

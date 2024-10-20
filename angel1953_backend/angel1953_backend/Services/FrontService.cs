@@ -80,9 +80,9 @@ namespace angel1953_backend.Services
         #endregion
 
         #region 增加影片瀏覽次數
-        public string AddVideoClick(int Id)
+        public string AddVideoClick(int Id,string account)
         {
-            return _frontrepository.addVideoClick(Id);
+            return _frontrepository.addVideoClick(Id,account);
         }
         #endregion
 

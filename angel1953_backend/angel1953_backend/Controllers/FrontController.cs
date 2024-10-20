@@ -102,7 +102,8 @@ namespace angel1953_backend.Controllers
         [HttpGet("AddVideoClick")]
         public IActionResult AddVideoClick(int VideoId)
         {
-            string result = _frontservice.AddVideoClick(VideoId);
+            var user = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            string result = _frontservice.AddVideoClick(VideoId,user);
             var msg = new { Status = 200, Message = result};
             var jsonmsg = JsonConvert.SerializeObject(msg);
             return Content(jsonmsg, "application/json");

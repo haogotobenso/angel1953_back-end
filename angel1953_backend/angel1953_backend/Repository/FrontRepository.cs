@@ -53,6 +53,11 @@ namespace angel1953_backend.Repository
                     Correct = 0
                 };
                 _context.Recovery.Add(recovery);
+                var Todo1 = _context.Todo.Where(t=>t.Account == account && t.TodoThing == 1 && t.State == false).FirstOrDefault();
+                if(Todo1 !=null)
+                {
+                    Todo1.State = true;
+                }
                 _context.SaveChanges(); // 保存 Recovery 記錄，讓其獲取生成的 RecoveryId
 
                 int correctCount = 0; // 記錄答對的數量
@@ -222,16 +227,22 @@ namespace angel1953_backend.Repository
         #endregion
 
         #region 增加影片瀏覽次數
-        public string addVideoClick(int videoId)
+        public string addVideoClick(int videoId,string account)
         {
             try
             {
                 VideoLink video = _context.VideoLink.Where(v=>v.VideoId == videoId).FirstOrDefault();
+
                 if(video == null)
                 {
                     return"找不到該筆影片資訊";
                 }
                 video.LinkClick += 1;
+                var Todo1 = _context.Todo.Where(t=>t.Account == account && t.TodoThing == 0 && t.State == false).FirstOrDefault();
+                if(Todo1 !=null)
+                {
+                    Todo1.State = true;
+                }
                 _context.SaveChanges();
                 return "已增加一點閱數";
 

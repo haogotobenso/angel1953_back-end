@@ -248,5 +248,11 @@ namespace angel1953_backend.Services
             return _memberRepository.getAccountInfo(account);
         }
         #endregion
+        #region 取得使用者Todo
+        public List<Todo> GetAccountTodo(string account)
+        {
+            return _memberRepository.getAccountTodo(account);
+        }
+        #endregion
     }
 }

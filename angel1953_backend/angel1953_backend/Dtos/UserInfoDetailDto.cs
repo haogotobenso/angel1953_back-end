@@ -26,5 +26,14 @@ namespace angel1953_backend.Dtos
         public int BullyingerPoint{get;set;}
 
         public int BullyingerPost{get;set;}
+
+        public List<TodoBackDto>? Todo{get;set;}
+        
     }
+    public class TodoBackDto()
+    {
+            public string TodoName{get;set;}
+            public string TodoState{get;set;}
+    }
+    
 }

@@ -174,6 +174,7 @@ namespace angel1953_backend.Controllers
         #endregion
 
         #region 取得使用者帳號資訊
+        [Authorize]
         [HttpGet("GetAccountInfo")]
         public IActionResult GetAccountInfo()
         {
@@ -183,6 +184,26 @@ namespace angel1953_backend.Controllers
             if(UserInfo!=null)
             {
                 msg = new { Status = 200, Message = UserInfo};
+            }
+            else
+            {
+                msg = new { Status = 400, Message = "尋找用戶資料時發生錯誤"};
+            }
+            var jsonsuccess = JsonConvert.SerializeObject(msg);
+            return Content(jsonsuccess, "application/json");
+        }
+        #endregion
+        #region 取得帳號Todo
+        [Authorize]
+        [HttpGet("GetAccountTodo")]
+        public IActionResult GetAccountTodo()
+        {
+            var user = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var UserTodo = _memberService.GetAccountTodo(user);
+            object msg;
+            if(UserTodo!=null)
+            {
+                msg = new { Status = 200, Message = UserTodo};
             }
             else
             {
