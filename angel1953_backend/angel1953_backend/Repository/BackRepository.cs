@@ -437,7 +437,7 @@ namespace angel1953_backend.Repository
             {
                 Member BackUser = _context.Member.Where(u=>u.Account == user).SingleOrDefault();
                 var query = from member in _context.Member
-                where member.SchoolId == BackUser.SchoolId && member.ClassId == BackUser.ClassId && member.IsTeacher == 0
+                where member.SchoolId == BackUser.SchoolId && member.IsTeacher == 0
                 join bullyinger in _context.Bullyinger
                 on new { member.Account, member.FBurl } equals new { bullyinger.Account, bullyinger.FBurl } into memberBullyinger
                 from bully in memberBullyinger.DefaultIfEmpty() // 左連接，允許找不到對應的bullyinger資料
