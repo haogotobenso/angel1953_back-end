@@ -15,6 +15,10 @@ namespace angel1953_backend.Dtos
         public string Class {get;set;}
 
         public string State {get;set;}
-        
+
+        public bool Todo0 {get;set;}
+
+        public bool Todo1{get;set;}
+        public bool Todo2{get;set;}        
     }
 }

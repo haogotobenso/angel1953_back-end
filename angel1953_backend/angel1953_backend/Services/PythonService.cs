@@ -29,7 +29,7 @@ namespace angel1953_backend.Services
             _httpClient = httpClient;
         }
         #region 啟動更新素養連結爬蟲API
-        public string UpdateExtLinkAPI()
+        public object UpdateExtLinkAPI()
         {
             // Python API 的 URL
             string UpdateExtLinkUrl = "http://127.0.0.1:5000/...";
@@ -38,18 +38,18 @@ namespace angel1953_backend.Services
             // 確保請求成功
             response.EnsureSuccessStatusCode();
             // 讀取回應的內容，同步操作
-            string responseData = response.Content.ReadAsStringAsync().Result;
+            object responseData = response.Content.ReadAsStringAsync().Result;
             return responseData;
         }
         #endregion
 
         #region 啟動單次爬蟲流程
-        public string OnceFBcrawlerAPI()
+        public object OnceFBcrawlerAPI()
         {
             string OnceFBcrawlerUrl = "http://127.0.0.1:5000/scrape";
             HttpResponseMessage response = _httpClient.GetAsync(OnceFBcrawlerUrl).Result;
             response.EnsureSuccessStatusCode();
-            string responseData = response.Content.ReadAsStringAsync().Result;
+            object responseData = response.Content.ReadAsStringAsync().Result;
             return responseData;
         }
         #endregion

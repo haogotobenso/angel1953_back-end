@@ -319,7 +319,10 @@ namespace angel1953_backend.Repository
                         Name = member.Name,
                         School = member.School != null ? member.School.School1 : string.Empty, // 如果School是null, 預設為空字串
                         Class = member.Class != null ? member.Class.Class1 : string.Empty,   // 如果Class是null, 預設為空字串
-                        State = bully == null ? "安全" : bully.State == 1 ? "警示" : bully.State == 2 ? "危險" : "未知"
+                        State = bully == null ? "安全" : bully.State == 1 ? "警示" : bully.State == 2 ? "危險" : "未知",
+                        Todo0 = _context.Todo.Any(t => t.Account == member.Account && t.TodoThing == 0 && t.State == false) ? false : true,
+                        Todo1 = _context.Todo.Any(t => t.Account == member.Account && t.TodoThing == 1 && t.State == false) ? false : true,
+                        Todo2 = _context.Todo.Any(t => t.Account == member.Account && t.TodoThing == 2 && t.State == false) ? false : true
                     };
 
                     return query.ToList();
@@ -339,7 +342,10 @@ namespace angel1953_backend.Repository
                         Name = member.Name,
                         School = member.School != null ? member.School.School1 : string.Empty, // 如果School是null, 預設為空字串
                         Class = member.Class != null ? member.Class.Class1 : string.Empty,   // 如果Class是null, 預設為空字串
-                        State = bully == null ? "安全" : bully.State == 1 ? "警示" : bully.State == 2 ? "危險" : "未知"
+                        State = bully == null ? "安全" : bully.State == 1 ? "警示" : bully.State == 2 ? "危險" : "未知",
+                        Todo0 = _context.Todo.Any(t => t.Account == member.Account && t.TodoThing == 0 && t.State == false) ? false : true,
+                        Todo1 = _context.Todo.Any(t => t.Account == member.Account && t.TodoThing == 1 && t.State == false) ? false : true,
+                        Todo2 = _context.Todo.Any(t => t.Account == member.Account && t.TodoThing == 2 && t.State == false) ? false : true
                     };
                     return query.ToList();
                 }
