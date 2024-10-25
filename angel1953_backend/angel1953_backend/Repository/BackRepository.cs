@@ -252,6 +252,7 @@ namespace angel1953_backend.Repository
             {
                 var query = from bp in _context.BullyingerPost
                             join b in _context.Bullyinger on bp.BullyingerId equals b.BullyingerId
+                            orderby bp.PostTime descending
                             select new ShowCaseDto
                             {
                                 BPId = bp.BPId,
