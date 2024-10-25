@@ -12,6 +12,8 @@ namespace angel1953_backend.Dtos
 
         public DateTime? PostTime {get;set;}
 
+        public DateTime? FirstDate {get;set;}
+
         public string PostInfo {get;set;}
 
         public string Posturl {get;set;}

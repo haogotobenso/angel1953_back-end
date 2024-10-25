@@ -11,6 +11,8 @@ namespace angel1953_backend.Dtos
 
         public DateTime? PostTime { get; set; }
 
+        public DateTime? FirstDate {get;set;}
+
         public string? Bullyinger{get; set;}
 
         public string FBurl{get; set;}

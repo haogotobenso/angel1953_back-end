@@ -256,6 +256,7 @@ namespace angel1953_backend.Repository
                             {
                                 BPId = bp.BPId,
                                 PostTime = bp.PostTime,
+                                FirstDate = b.FirstDate,
                                 Posturl = bp.Posturl,
                                 Bullyinger = b.Bullyinger1,
                                 FBurl = b.FBurl
@@ -285,6 +286,7 @@ namespace angel1953_backend.Repository
                                 BPId = bp.BPId,
                                 Bullyinger = b.Bullyinger1,
                                 PostTime = bp.PostTime,
+                                FirstDate = b.FirstDate,
                                 PostInfo = bp.PostInfo,
                                 Posturl = bp.Posturl,
                                 KeyWord = bp.KeyWord
