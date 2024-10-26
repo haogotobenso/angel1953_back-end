@@ -212,7 +212,6 @@ namespace angel1953_backend.Controllers
 
             return Content(jsonresponse, "application/json");
         }
-
         #endregion        
 
         
