@@ -39,7 +39,7 @@ namespace angel1953_backend.Controllers
 
         #region 新增書籍
         [HttpPost("UploadBooks")]
-        public IActionResult UploadBooks([FromBody]Book bookupdate)
+        public IActionResult UploadBooks([FromForm]Book bookupdate)
         {
             string msg = "";
             object msginfo;
@@ -338,6 +338,58 @@ namespace angel1953_backend.Controllers
             return Content(jsonmsg, "application/json");
         }
         #endregion
+        #region 查看學生通報資訊
+        [HttpGet("ShowScase")]
+        public IActionResult ShowScase()
+        {
+            var user = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var Case  =_backService.ShowScase(user);
+            var response = new { Status = 200, Message = Case };
+            var jsonresponse = JsonConvert.SerializeObject(response);
+            return Content(jsonresponse, "application/json");
+
+        }
+        #endregion
+        #region 查看單筆學生通報詳細
+        [HttpGet("ShowOneScase")]
+        public IActionResult ShowOneScase([FromQuery]int scaseId)
+        {
+            var user = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var Case  =_backService.ShowOneScase(scaseId,user);
+            var response = new { Status = 200, Message = Case };
+            var jsonresponse = JsonConvert.SerializeObject(response);
+            return Content(jsonresponse, "application/json");
+        }
+        #endregion
+        #region 查看通報圖片
+        [HttpGet("{ScaseId}/GetScaseImg")]
+        public IActionResult GetScaseImg(int ScaseId)
+        {
+            var thumbnail = _backService.GetScaseImg(ScaseId);
+            if (thumbnail == null) return NotFound();
+            return File(thumbnail, "image/jpeg");
+        }
+        #endregion
+        #region 處理狀態變更
+        [HttpPost("ChageOneScase")]
+        public IActionResult ChangOneScase(int ScaseId)
+        {
+            string msg = "";
+            object response;
+            var user = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if(_backService.ChageOneScase(ScaseId,user))
+            {
+                 response = new { Status = 200, Message = "狀態變更成功" };
+            }
+            else
+            {
+                response = new { Status = 400, Message = "狀態變更時出現異常" };
+            }
+            var jsonresponse = JsonConvert.SerializeObject(response);
+            return Content(jsonresponse, "application/json");
+        }
+        #endregion
+    
         #region 取得帳號測試
         [HttpGet("trytrysee")]
         public IActionResult TryTrySee() 

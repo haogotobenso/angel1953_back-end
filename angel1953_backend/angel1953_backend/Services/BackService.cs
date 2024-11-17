@@ -62,6 +62,7 @@ namespace angel1953_backend.Services
         #region 上傳單筆書籍資料
         public string UploadBooks(Book bookupdate)
         {
+            bookupdate.ISBNUrl =$"https://aleweb.ncl.edu.tw/F/8FQ8BVJ3V3CGYG7F258XTX7S3FSPF1BGM1HDE8V983XG5CFSLQ-14637?func=find-b&request={bookupdate.ISBN}+&find_code=ISBN&adjacent=Y&local_base=&x=49&y=8&filter_code_1=WLN&filter_request_1=&filter_code_2=WYR&filter_request_2=&filter_code_3=WYR&filter_request_3=&filter_code_4=WMY&filter_request_4=&filter_code_5=WSL&filter_request_5=";
             return _backRepository.uploadBook(bookupdate);
         }
         #endregion
@@ -206,6 +207,33 @@ namespace angel1953_backend.Services
         }
 
         #endregion
+        #region 查看學生通報資訊
+        public List<Scase> ShowScase(string account)
+        {
+            return _backRepository.showScase(account);
+        }
+        #endregion
+        #region 查看單筆學生通報詳細
+        public Scase ShowOneScase(int id,string account)
+        {
+            return _backRepository.showOneScase(id,account);
+
+        }
+        #endregion
+        #region 查看通報圖片
+        public byte[] GetScaseImg(int id)
+        {
+            return _backRepository.getScaseImg(id);
+        }
+        #endregion
+        #region 處理狀態變更
+        public bool ChageOneScase(int id, string account)
+        {
+            return _backRepository.chageOneScase(id,account);
+        }
+        #endregion
+
+
         
     }
 }
