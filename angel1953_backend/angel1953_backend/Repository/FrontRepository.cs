@@ -260,8 +260,18 @@ namespace angel1953_backend.Repository
         {
             try
             {
-                List<Book> book = _context.Book.ToList();
-                return book;
+                var books = _context.Book
+                .Select(b => new Book
+                {
+                    BookId = b.BookId,
+                    BookName = b.BookName ?? "Unknown",
+                    Author = b.Author ?? "Unknown",
+                    PublicDate = b.PublicDate,
+                    ISBN = b.ISBN ?? "Unknown",
+                    ISBNUrl = b.ISBNUrl ?? "Unknown"
+                })
+                .ToList();
+                return books;
 
             }
             catch(Exception ex)
@@ -419,6 +429,87 @@ namespace angel1953_backend.Repository
 
 
 
+        #endregion
+        #region 新增霸凌通報
+        public string addScase(string account,Scase Case)
+        {
+            try
+            {
+                Case.Date = DateTime.Now;
+                Case.Account = account;
+                _context.Add(Case);
+                _context.SaveChanges();
+                return"新增案件成功";
+
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
+
+        }
+        #endregion
+
+        #region 顯示全部通報紀錄
+        public List<Scase> showScase(string account)
+        {
+            try
+            {
+                var Case = from SC in _context.Scase
+                           where SC.Account == account
+                           select new Scase
+                           {
+                             ScaseId = SC.ScaseId,
+                             Date = SC.Date,
+                             State = SC.State
+                           };
+                           return Case.ToList();
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
+        }
+        #endregion
+        #region 顯示單筆通報詳細記錄
+        public Scase showOneScase(int id,string account)
+        {
+            try
+            {
+                var Case = from SC in _context.Scase
+                           where SC.Account == account && SC.ScaseId == id
+                           select new Scase
+                           {
+                             ScaseId = SC.ScaseId,
+                             PostUrl = SC.PostUrl,
+                             Source = SC.Source,
+                             Info = SC.Info,
+                             Account = SC.Account,
+                             Date = SC.Date,
+                             State = SC.State
+                           };
+                           return Case.FirstOrDefault();
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
+        }
+        #endregion
+        #region 取得通報紀錄圖片
+        public byte[] getScaseImg(int id)
+        {
+            try
+            {
+               
+                  byte[] img = _context.Scase.Where(s => s.ScaseId == id).Select(s => s.SCimg).FirstOrDefault();
+                  return img;
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
+        }
         #endregion
     }
 }

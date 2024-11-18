@@ -42,8 +42,18 @@ namespace angel1953_backend.Repository
         {
             try
             {
-                List<Book> booklist = _context.Book.ToList();
-                return booklist;
+                var books = _context.Book
+                .Select(b => new Book
+                {
+                    BookId = b.BookId,
+                    BookName = b.BookName ?? "Unknown",
+                    Author = b.Author ?? "Unknown",
+                    PublicDate = b.PublicDate,
+                    ISBN = b.ISBN ?? "Unknown",
+                    ISBNUrl = b.ISBNUrl ?? "Unknown"
+                })
+                .ToList();
+                return books;
             }
             catch(Exception ex)
             {
@@ -518,6 +528,136 @@ namespace angel1953_backend.Repository
                 };
                 return data;
 
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
+
+        }
+        #endregion
+        #region 查看學生通報資訊
+        public List<Scase> showScase(string TAccount)
+        {
+            try
+            {
+                // 獲取目前使用者的學校 ID
+                var backUserSchoolId = _context.Member
+                    .Where(u => u.Account == TAccount)
+                    .Select(u => u.SchoolId)
+                    .SingleOrDefault();
+
+                // 確保找到該使用者的學校 ID
+                if (backUserSchoolId == null)
+                {
+                    throw new Exception("無法找到教師的學校資料");
+                }
+
+                // 查詢符合條件的通報資料
+                var Case = _context.Scase
+                    .Join(_context.Member,
+                        sc => sc.Account,          // Scase 表的 Account 欄位
+                        mem => mem.Account,        // Member 表的 Account 欄位
+                        (sc, mem) => new { Scase = sc, Member = mem })
+                    .Where(joined => joined.Member.SchoolId == backUserSchoolId)
+                    .Select(joined => new Scase
+                    {
+                        ScaseId = joined.Scase.ScaseId,
+                        Date = joined.Scase.Date,
+                        State = joined.Scase.State
+                    })
+                    .ToList();
+
+                return Case;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error in showScase: {ex.Message}", ex);
+            }
+        }
+
+        #endregion
+        #region 查看單筆學生通報詳細
+        public Scase showOneScase(int id, string TAccount)
+        {
+            try
+            {
+                // 取得教師的學校 ID
+                var backUserSchoolId = _context.Member
+                    .Where(u => u.Account == TAccount)
+                    .Select(u => u.SchoolId)
+                    .SingleOrDefault();
+
+                // 確保 backUserSchoolId 不為 null
+                if (backUserSchoolId == null)
+                {
+                    throw new Exception("未找到該教師的學校資料");
+                }
+
+                // 查詢符合條件的通報
+                var Case = _context.Scase
+                    .Join(_context.Member,
+                        sc => sc.Account,           // Scase 表中的 Account
+                        m => m.Account,             // Member 表中的 Account
+                        (sc, m) => new { Scase = sc, Member = m })
+                    .Where(joined => joined.Scase.ScaseId == id && joined.Member.SchoolId == backUserSchoolId)
+                    .Select(joined => new Scase
+                    {
+                        ScaseId = joined.Scase.ScaseId,
+                        PostUrl = joined.Scase.PostUrl,
+                        Source = joined.Scase.Source,
+                        Info = joined.Scase.Info,
+                        Account = joined.Scase.Account,
+                        Date = joined.Scase.Date,
+                        State = joined.Scase.State
+                    })
+                    .FirstOrDefault();
+
+                return Case;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error in showOneScase: {ex.Message}", ex);
+            }
+        }
+        #endregion
+        #region 查看通報圖片
+        public byte[] getScaseImg(int id)
+        {
+            try
+            {
+               
+                  byte[] img = _context.Scase.Where(s => s.ScaseId == id).Select(s => s.SCimg).FirstOrDefault();
+                  return img;
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
+        }
+        #endregion
+        #region 處理狀態變更
+        public bool chageOneScase(int id, string TAccount)
+        {
+            try
+            {
+                Member BackUser = _context.Member.Where(u=>u.Account == TAccount).SingleOrDefault();
+                var Case = (from s in _context.Scase
+                            join m in _context.Member on s.Account equals m.Account
+                            where s.ScaseId == id && m.SchoolId == BackUser.SchoolId
+                            select s).SingleOrDefault();
+                if(Case !=null)
+                {
+                    Case.State = 1;
+                    _context.SaveChanges();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+
+                
             }
             catch(Exception ex)
             {

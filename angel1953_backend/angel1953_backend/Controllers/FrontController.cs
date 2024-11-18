@@ -111,7 +111,6 @@ namespace angel1953_backend.Controllers
         #endregion
 
         #region 取得書籍資訊
-        
         [HttpGet("GetBookList")]
         public IActionResult GetBookList()
         {
@@ -213,6 +212,61 @@ namespace angel1953_backend.Controllers
             return Content(jsonresponse, "application/json");
         }
 
+        #endregion
+
+        #region 新增霸凌通報
+        [HttpPost("AddScase")]
+        public IActionResult AddScase([FromForm]Scase Case,[FromForm] IFormFile? CaseImg)
+        {
+            var user = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var account = user;
+            if(CaseImg !=null)
+            {
+                using (var memoryStream = new MemoryStream())
+                {
+                    CaseImg.CopyTo(memoryStream);
+                    Case.SCimg = memoryStream.ToArray(); // 將圖片儲存為 byte[]
+                }
+
+            }
+            var msg = _frontservice.AddScase(account,Case);
+            var response = new { Status = 200, Message = msg  };
+            var jsonresponse = JsonConvert.SerializeObject(response);
+            return Content(jsonresponse, "application/json");
+
+        }
+        #endregion
+        #region 查看歷史通報紀錄
+        [HttpGet("ShowScase")]
+        public IActionResult ShowScase()
+        {
+            var user = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var Case  =_frontservice.ShowScase(user);
+            var response = new { Status = 200, Message = Case };
+            var jsonresponse = JsonConvert.SerializeObject(response);
+            return Content(jsonresponse, "application/json");
+
+        }
+        #endregion
+        #region 查看一筆通報詳細記錄
+        [HttpGet("ShowOneScase")]
+        public IActionResult ShowOneScase([FromQuery]int scaseId)
+        {
+            var user = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var Case  =_frontservice.ShowOneScase(scaseId,user);
+            var response = new { Status = 200, Message = Case };
+            var jsonresponse = JsonConvert.SerializeObject(response);
+            return Content(jsonresponse, "application/json");
+        }
+        #endregion
+        #region 取得霸凌通報圖片
+        [HttpGet("{ScaseId}/GetScaseImg")]
+        public IActionResult GetScaseImg(int ScaseId)
+        {
+            var thumbnail = _frontservice.GetScaseImg(ScaseId);
+            if (thumbnail == null) return NotFound();
+            return File(thumbnail, "image/jpeg");
+        }
         #endregion        
 
         

@@ -118,6 +118,32 @@ namespace angel1953_backend.Services
             return _frontrepository.GetKeywordSum();
         }
         #endregion
+        #region 新增霸凌通報
+        public string AddScase(string account,Scase Case)
+        {
+            return _frontrepository.addScase(account,Case);
 
+        }
+        #endregion
+        #region 顯示霸凌通報紀錄
+        public List<Scase> ShowScase(string account)
+        {
+            return _frontrepository.showScase(account);
+        }
+        #endregion
+        #region 顯示單筆霸凌通報詳細記錄
+        public Scase ShowOneScase(int id,string account)
+        {
+            return _frontrepository.showOneScase(id,account);
+
+        }
+        #endregion
+        #region 取得通報紀錄縮圖
+
+        public byte[] GetScaseImg(int id)
+        {
+            return _frontrepository.getScaseImg(id);
+        }
+        #endregion
     }
 }
