@@ -563,6 +563,10 @@ namespace angel1953_backend.Repository
                     .Select(joined => new Scase
                     {
                         ScaseId = joined.Scase.ScaseId,
+                        PostUrl = joined.Scase.PostUrl,
+                        Source = joined.Scase.Source,
+                        Info = joined.Scase.Info,
+                        Account = joined.Scase.Account,
                         Date = joined.Scase.Date,
                         State = joined.Scase.State
                     })

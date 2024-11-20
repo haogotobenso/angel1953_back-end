@@ -460,6 +460,10 @@ namespace angel1953_backend.Repository
                            select new Scase
                            {
                              ScaseId = SC.ScaseId,
+                             PostUrl = SC.PostUrl,
+                             Source = SC.Source,
+                             Info = SC.Info,
+                             Account = SC.Account,
                              Date = SC.Date,
                              State = SC.State
                            };
