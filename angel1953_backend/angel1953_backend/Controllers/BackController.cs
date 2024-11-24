@@ -160,11 +160,14 @@ namespace angel1953_backend.Controllers
 
         #region FB爬蟲連結新增
         [HttpPost("AddFBLink")]
-        public IActionResult AddFBLink([FromBody] CrawlerLink FBLink)
+        public IActionResult AddFBLink([FromBody] AddFBLinkDto linkinfo)
         {
+            CrawlerLink FBlink  =new CrawlerLink();
+            FBlink.LinkName = linkinfo.LinkName;
+            FBlink.FBLink = linkinfo.FBLink;
             var user = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            FBLink.Account = user;
-            string result = _backService.AddFBLink(FBLink);
+            FBlink.Account = user;
+            string result = _backService.AddFBLink(FBlink);
             var msg = new { Status = 200, Message = result };
             var jsonmsg = JsonConvert.SerializeObject(msg);
             return Content(jsonmsg, "application/json");
